@@ -1,0 +1,28 @@
+---
+import { Github, Linkedin, Twitter, AtSign, File } from "lucide-react"
+import { Button, Card, Badge, CardContent, CardFooter, CardHeader, CardTitle } from "@components/index";
+
+---
+<article class="h-max w-max flex flex-col items-start justify-center space-y-4"> 
+  <section class="w-auto flex flex-col items-start justify-center space-y-8">
+    <h1 class="text-5xl font-semibold tracking-wide">Lorem Ipsum</h1>
+    <div class="inline-flex items-center justify-start space-x-4">
+      <Github/>
+      <Linkedin/>
+      <Twitter/>
+      <AtSign/>
+      <File/>
+    </div>
+  </section>
+  <Card className="w-96">
+    <CardHeader>
+      <CardTitle>Lorem Ipsum</CardTitle>
+    </CardHeader>
+    <CardContent>
+      Lorem Ipsum <Badge>Angular</Badge> eminem dolor sit amet, consectetur adipiscing elit.
+    </CardContent>
+    <CardFooter>
+      <Button variant="secondary">Lorem</Button>
+    </CardFooter>
+  </Card>
+</article>

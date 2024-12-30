@@ -1,5 +1,5 @@
 ---
-import Header from 'src/ui/Header.astro';
+import Header from '@ui/Header.astro';
 
 interface Props {
   title: string;
@@ -17,9 +17,9 @@ const { title } = Astro.props;
     <link rel="stylesheet" href="/styles/global.css">
     <title>{ title }</title>
   </head>
-  <body class="bg-woodsmoke-950 w-screen h-screen">
+  <body class="bg-woodsmoke-950 text-woodsmoke-50 font-poppins w-screen h-screen flex flex-col items-center justify-center">
     <Header/>
-    <main class="relative w-auto min-h-max max-h-full">
+    <main class="relative grow w-auto flex flex-col items-center justify-center">
       <slot />
     </main>
   </body>

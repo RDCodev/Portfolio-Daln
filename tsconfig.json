@@ -1,6 +1,7 @@
 {
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
+    "esModuleInterop": true,
     "baseUrl": ".",
     "paths": {
       "@components/*": [
@@ -17,6 +18,9 @@
       ],
       "@utils/*": [
         "src/utils/*"
+      ],
+      "@ui/*":[
+        "src/ui/*"
       ]
     },
     "jsx": "react-jsx",

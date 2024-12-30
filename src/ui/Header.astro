@@ -1,15 +1,17 @@
 ---
-import { Button } from "@components/button";
+import { Button } from "@components/button/button";
 import { CloudOff, Moon } from "lucide-react"
 
 ---
-<header class="flex justify-between items-center min-h-min max-h-min py-5 px-60 w-auto border-b border-woodsmoke-400">
-  <Button variant="raw" size="icon">
-    <CloudOff/>
-  </Button>
-  <div class="inline-flex items-center justify-start space-x-2">
+<header class="min-h-min max-h-min py-5 max-sm:px-10 max-xl:px-24 xl:px-52 w-full border-b border-woodsmoke-400 transition-all">
+  <nav class="w-auto flex items-center justify-between">
     <Button variant="raw" size="icon">
-      <Moon/>
+      <CloudOff size={32}/>
     </Button>
-  </div>
+    <div class="inline-flex items-center justify-start space-x-2">
+      <Button variant="raw" size="icon" className="hidden">
+        <Moon size={32}/>
+      </Button>
+    </div>
+  </nav>
 </header>
