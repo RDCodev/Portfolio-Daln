@@ -4,6 +4,9 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   darkMode: 'selector',
+  corePlugins: {
+    aspectRatio: true
+  },
   theme: {
     colors: {
       'woodsmoke': {
@@ -38,5 +41,7 @@ export default {
       'poppins': ['Poppins', ...defaultTheme.fontFamily.sans]
     }
   },
-  plugins: [],
+  plugins: [
+    require("@tailwindcss/aspect-ratio")
+  ],
 }
