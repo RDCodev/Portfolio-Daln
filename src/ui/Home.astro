@@ -1,0 +1,55 @@
+---
+import { Github, Linkedin, Twitter, AtSign, File } from "lucide-react"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@components/card/card";
+import { Badge } from "@components/badge/badge";
+import { Button } from "@components/button/button"
+---
+
+<article class="h-auto w-auto flex flex-col py-10 items-start justify-center space-y-10"> 
+  <section class="w-auto flex flex-col items-start justify-center space-y-6">
+    <h1 class="text-4xl text-woodsmoke-50 font-semibold tracking-wide">S. David</h1>
+    <div class="w-auto h-max">
+      <p class="text-woodsmoke-200 font-medium tracking-tight">Software Engineer & Backend Developer.</p>
+      <p class="text-woodsmoke-200 text-base font-medium tracking-tight">Feel free to use my social media's to stay in touch.</p>
+      <div class="inline-flex items-center justify-start space-x-5 mt-4">
+        <Button variant="raw" size="icon">
+          <Github className="text-woodsmoke-400"/>
+        </Button>
+        <Button variant="raw" size="icon">
+          <Linkedin className="text-woodsmoke-400"/>
+        </Button>
+        <Button variant="raw" size="icon">
+          <Twitter className="text-woodsmoke-400"/>
+        </Button>
+        <Button variant="raw" size="icon">
+          <AtSign className="text-woodsmoke-400"/>
+        </Button>
+        <Button variant="raw" size="icon">
+          <File className="text-woodsmoke-400"/>
+        </Button>
+      </div>
+    </div>
+  </section>
+  <section class="w-full flex flex-col space-y-5">
+    <h1 class="text-xl text-woodsmoke-50 font-semibold tracking-wide">Commits</h1>
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex justify-between">
+          <div class="h-max w-auto">
+            <h2 class="text-woodsmoke-50 text-base inline-block">Layer 8 Error</h2>
+            <span class="text-woodsmoke-400 text-base">&bullet; Blog</span>
+          </div>
+          <span class="text-woodsmoke-200 text-sm">Jan 4, 2025</span>
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="text-woodsmoke-200 text-sm">
+        Ullamcorper nonummy dolor sanctus no invidunt kasd ipsum sit in facilisi eu dolore dolor duo consetetur. 
+      </CardContent>
+      <CardFooter className="space-y-0 space-x-3.5">
+        <Badge variant="secondary">astro</Badge>
+        <Badge>refac</Badge>
+        <Badge>styles</Badge>
+      </CardFooter>
+    </Card>
+  </section>
+</article>
