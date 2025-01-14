@@ -1,6 +1,7 @@
 ---
 import Header from '@ui/Header.astro';
 import Footer from '@ui/Footer.astro';
+import Sidenav from '@ui/Sidenav.astro';
 
 interface Props {
   title: string;
@@ -23,6 +24,7 @@ const { title } = Astro.props;
     <main class="relative max-md:w-3/5 md:w-1/2 flex-1 m-auto flex flex-col items-start justify-start transition-all">
       <slot/>
     </main>
-    <Footer/>
+    <!-- <Footer/> -->
   </body>
+  <Sidenav/>
 </html>

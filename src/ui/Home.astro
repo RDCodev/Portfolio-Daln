@@ -3,6 +3,7 @@ import { Github, Linkedin, Twitter, AtSign, File } from "lucide-react"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@components/card/card";
 import { Badge } from "@components/badge/badge";
 import { Button } from "@components/button/button"
+import { Image } from "astro:assets";
 ---
 
 <article class="h-auto w-full flex flex-col py-10 items-start justify-center space-y-10"> 
@@ -28,6 +29,47 @@ import { Button } from "@components/button/button"
           <File className="text-woodsmoke-400"/>
         </Button>
       </div>
+    </div>
+  </section>
+  <section class="w-full flex flex-col space-y-5">
+    <h1 class="text-xl text-woodsmoke-50 font-semibold tracking-wide">Projects</h1>
+    <div class="w-full h-auto grid grid-cols-2 grid-flow-row auto-rows-max gap-4">
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex justify-between">
+            <div class="w-max h-auto">
+              <h2 class="text-woodsmoke-50 text-base">Lorem Ipsum</h2>
+            </div>
+            <span class="text-woodsmoke-400 text-sm font-semibold tracking-wide">v0.0.0</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="text-woodsmoke-200 text-sm">
+          Voluptua kasd sed consequat iriure sanctus.
+        </CardContent>
+        <CardFooter className="space-y-0 space-x-3.5">
+          <Badge variant="secondary">astro</Badge>
+          <Badge>tailwindcss</Badge>
+          <Badge>react</Badge>
+        </CardFooter>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex justify-between">
+            <div class="w-max h-auto">
+              <h2 class="text-woodsmoke-50 text-base">Lorem Ipsum</h2>
+            </div>
+            <span class="text-woodsmoke-400 text-sm font-semibold tracking-wide">v0.0.0</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="text-woodsmoke-200 text-sm">
+          Voluptua kasd sed consequat iriure sanctus.
+        </CardContent>
+        <CardFooter className="space-y-0 space-x-3.5">
+          <Badge variant="secondary">astro</Badge>
+          <Badge>tailwindcss</Badge>
+          <Badge>react</Badge>
+        </CardFooter>
+      </Card>
     </div>
   </section>
   <section class="w-full flex flex-col space-y-5">

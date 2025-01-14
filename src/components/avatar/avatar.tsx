@@ -13,16 +13,17 @@ export interface AvatarProps
 const Avatar: React.FC<AvatarProps> = ({ src, alt, fallback, className, ...props }) => (
   <AvatarPrimitive.Root className={cn(
     "relative flex h-[54px] w-[54px] shrink-0 overflow-hidden rounded-full",
-     className
-  )}
-  {...props}>
+      className
+    )}
+    {...props}
+  >
     <AvatarPrimitive.Image 
       className="aspect-square h-full w-full" 
       src={src}
     />
     <AvatarPrimitive.Fallback 
       className="flex font-poppins font-medium text-xl h-full w-full items-center justify-center rounded-full bg-woodsmoke-800">
-        {fallback}
+        { fallback }
     </AvatarPrimitive.Fallback>
   </AvatarPrimitive.Root>
 );
