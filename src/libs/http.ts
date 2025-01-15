@@ -1,26 +1,91 @@
-export type HttpMethod = "get" | "post" | "put" | "delete";
+type HttpMethod = "get" | "post" | "put" | "delete";
 
-export interface Builder<P> {
-  builder         : ()                                      => Builder<P>;
-  method          : (method: HttpMethod)                    => Builder<P>;
-  headers         : (headers: Record<string, string>)       => Builder<P>;
-  params          : (params: Record<string, string>)        => Builder<P>;
-  body            : (payload: P)                            => Builder<P>;
-  url             : (url: string)                           => Builder<P>;
+interface Builder<P> {
+  builder         : ()                                      => Builder<P> | HttpRequestBuilder<P>;
+  method          : (method: HttpMethod)                    => Builder<P> | HttpRequestBuilder<P>;
+  headers         : (headers: Record<string, string>)       => Builder<P> | HttpRequestBuilder<P>;
+  params          : (params: Record<string, string>)        => Builder<P> | HttpRequestBuilder<P>;
+  body            : (payload: P)                            => Builder<P> | HttpRequestBuilder<P>;
+  url             : (url: string)                           => Builder<P> | HttpRequestBuilder<P>;
   build           : ()                                      => HttpRequest<P>;
 }
 
-export class HttpRequest<P> {
+class HttpRequest<P> {
   
-  public url     !: Required<string>;
-  public method   : HttpMethod                      = "get";
-  public body     : P | null                        = null;
-  public headers  : Record<string, string> | null   = null;
-  public params   : Record<string, string> | null   = null;
+  private _url     !: Required<URL>;
+  private _method   : HttpMethod                      = "get";
+  private _body     : unknown | null                  = null;
+  private _headers  : Headers | null                  = null;
+  private _params   : URLSearchParams | null          = null;
 
-  public request(url?: string) {
-    return fetch(url ?? this.url)
+  public async fetch(url?: string): Promise<P> {
+
+    const res = await fetch(
+      this.parseUrl(url ?? this.url, this.params),
+      {
+        method: this.method,
+        headers: this.headers ?? undefined,
+      }
+    );
+
+    const data = await res.json();
+
+    return (data as P);
   }
+
+  private parseUrl(url: URL | string, params?: URLSearchParams | null) {
+
+    if (typeof url === "string") url = new URL(url);
+
+    if (!params) return url;
+
+    for (const [key, value] of params.entries()) {
+      url.searchParams.append(key, value);
+    }
+
+    return url;
+  }
+
+  public set url(url: Required<URL | string>) {
+    this._url = new URL(url);
+  }
+
+  public get url() {
+    return this._url;
+  }
+
+  public set method(method: HttpMethod) {
+    this._method = method;
+  }
+
+  public get method() {
+    return this._method;
+  }
+
+  public set body(body: unknown | null) {
+    this._body = body;
+  }
+
+  public get body() {
+    return this._body;
+  }
+
+  public set headers(headers: Headers | null) {
+    this._headers = headers;
+  }
+
+  public get headers() {
+    return this._headers;
+  }
+
+  public set params(params: URLSearchParams | null) {
+    this._params = params;
+  }
+
+  public get params() {
+    return this._params;
+  }
+
 };
 
 export class HttpRequestBuilder<P> implements Builder<P> {
@@ -29,22 +94,25 @@ export class HttpRequestBuilder<P> implements Builder<P> {
 
   constructor() { this.builder(); }
 
-  public build() {
-    return this.httpRequest;
-  }
-
   public builder() {
     this.httpRequest = new HttpRequest();
     return this;
   };
 
   public headers(headers: Record<string, string>) {
-    this.httpRequest.headers = headers;
+    const reqHeaders = new Headers();
+
+    for (const [key, value] of Object.entries(headers)) 
+      reqHeaders.append(key, value)
+
+    this.httpRequest.headers = reqHeaders;
+
     return this;
   }
 
   public params(params: Record<string, string>) {
-    this.httpRequest.params = params;
+    this.httpRequest.params = new URLSearchParams(params);
+
     return this;
   }
 
@@ -62,13 +130,13 @@ export class HttpRequestBuilder<P> implements Builder<P> {
     this.httpRequest.method = method;
     return this;
   };
+
+  public build() {
+
+    const http = this.httpRequest;
+
+    this.builder();
+
+    return http;
+  }
 }
-
-const http = new HttpRequestBuilder()
-  .builder()
-  .url("https://jsonplaceholder.typicode.com/posts/1")
-  .build();
-
-const response = await http.request();
-
-response.json();

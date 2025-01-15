@@ -22,6 +22,9 @@
       "@ui/*":[
         "src/ui/*"
       ],
+      "@models/*": [
+        "src/models/*"
+      ],
       "@constant/*": [
         "src/constant/*"
       ]

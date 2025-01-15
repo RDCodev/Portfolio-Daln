@@ -5,6 +5,25 @@ import { Badge } from "@components/badge/badge";
 import { Button } from "@components/button/button"
 import { Avatar } from "@components/avatar/avatar";
 import { githubUserEvents, GH_USER } from "@constant/github.constant";
+import { HttpRequestBuilder } from "src/libs/http";
+import { type GithubEvent } from "@models/github.models";
+
+const headers: Record<string, string> = {
+  "X-Github-Api-Version": "2022-11-28"
+};
+
+const pagination: Record<string, string> = {
+  "per_page": "5", "page": "1"
+}
+
+const http = new HttpRequestBuilder<GithubEvent[]>()
+  .headers(headers)
+  .params(pagination)
+  .method("get")
+  .url(githubUserEvents(GH_USER))
+  .build();
+
+const commits = await http.fetch();
 
 ---
 <article class="h-auto w-full flex flex-col mt-20 py-10 items-start justify-center space-y-14"> 
