@@ -21,6 +21,9 @@
       ],
       "@ui/*":[
         "src/ui/*"
+      ],
+      "@constant/*": [
+        "src/constant/*"
       ]
     },
     "jsx": "react-jsx",
