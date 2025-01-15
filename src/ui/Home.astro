@@ -3,15 +3,17 @@ import { Github, Linkedin, Twitter, AtSign, File } from "lucide-react"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@components/card/card";
 import { Badge } from "@components/badge/badge";
 import { Button } from "@components/button/button"
----
+import { Avatar } from "@components/avatar/avatar";
+import { githubUserEvents, GH_USER } from "@constant/github.constant";
 
-<article class="h-auto w-full flex flex-col py-10 items-start justify-center space-y-10"> 
-  <section class="w-auto flex flex-col items-start justify-center space-y-6">
+---
+<article class="h-auto w-full flex flex-col mt-20 py-10 items-start justify-center space-y-14"> 
+  <section class="w-auto flex flex-col items-start justify-center space-y-5">
     <h1 class="text-4xl text-woodsmoke-50 font-semibold tracking-wide">S. David</h1>
     <div class="w-auto h-max">
       <p class="text-woodsmoke-200 font-medium tracking-tight">Software Engineer & Backend Developer.</p>
       <p class="text-woodsmoke-200 text-base font-medium tracking-tight">Feel free to use my social media's to stay in touch.</p>
-      <div class="inline-flex items-center justify-start space-x-5 mt-4">
+      <div class="inline-flex items-center justify-start space-x-5 mt-8">
         <Button variant="raw" size="icon">
           <Github className="text-woodsmoke-400"/>
         </Button>
@@ -31,12 +33,85 @@ import { Button } from "@components/button/button"
     </div>
   </section>
   <section class="w-full flex flex-col space-y-5">
-    <h1 class="text-xl text-woodsmoke-50 font-semibold tracking-wide">Commits</h1>
+    <h2 class="text-xl text-woodsmoke-50 font-semibold tracking-wide">Projects</h2>
+    <div class="grid grid-flow-row auto-rows-auto grid-cols-2 gap-x-5 gap-5">
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            <div class="h-max w-auto flex items-center">
+              <Avatar 
+                src={""}
+                alt={""}
+                fallback={""}
+                className="w-[32px] h-[32px] inline-block"
+              />
+              <div class="ml-3">
+                <h3 class="text-woodsmoke-50 text-base inline-block">Astro Portfolio</h3>
+                <span class="text-woodsmoke-400 text-base font-medium tracking-wide">&bullet; v0.0.1</span>
+              </div>
+            </div>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="text-woodsmoke-200 text-sm">
+          Aliquip facilisis justo ut ipsum wisi.
+        </CardContent>
+        <CardFooter className="space-y-0 space-x-3.5">
+          <Avatar 
+            src={""}
+            alt={""}
+            fallback={""}
+            className="w-[32px] h-[32px] inline-block"
+          />
+          <div class="flex space-x-2.5">
+            <Badge variant="secondary">astro</Badge>
+            <Badge>react</Badge>
+            <Badge>tailwindcss</Badge>
+          </div>
+        </CardFooter>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            <div class="h-max w-auto flex items-center">
+              <Avatar 
+                src={""}
+                alt={""}
+                fallback={""}
+                className="w-[32px] h-[32px] inline-block"
+              />
+              <div class="ml-3">
+                <h3 class="text-woodsmoke-50 text-base inline-block">Astro Portfolio</h3>
+                <span class="text-woodsmoke-400 text-base font-medium tracking-wide">&bullet; v0.0.1</span>
+              </div>
+            </div>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="text-woodsmoke-200 text-sm">
+          Aliquip facilisis justo ut ipsum wisi.
+        </CardContent>
+        <CardFooter className="space-y-0 space-x-3.5">
+          <Avatar 
+            src={""}
+            alt={""}
+            fallback={""}
+            className="w-[32px] h-[32px] inline-block"
+          />
+          <div class="flex space-x-2.5">
+            <Badge variant="secondary">astro</Badge>
+            <Badge>react</Badge>
+            <Badge>tailwindcss</Badge>
+          </div>
+        </CardFooter>
+      </Card>
+    </div>
+  </section>
+  <section class="w-full flex flex-col space-y-5">
+    <h2 class="text-xl text-woodsmoke-50 font-semibold tracking-wide">Commits</h2>
     <Card>
       <CardHeader>
         <CardTitle className="flex justify-between">
           <div class="h-max w-auto">
-            <h2 class="text-woodsmoke-50 text-base inline-block">Layer 8 Error</h2>
+            <h3 class="text-woodsmoke-50 text-base inline-block">Layer 8 Error</h3>
             <span class="text-woodsmoke-400 text-base">&bullet; Blog</span>
           </div>
           <span class="text-woodsmoke-200 text-sm">Jan 4, 2025</span>
@@ -45,7 +120,7 @@ import { Button } from "@components/button/button"
       <CardContent className="text-woodsmoke-200 text-sm">
         Ullamcorper nonummy dolor sanctus no invidunt kasd ipsum sit in facilisi eu dolore dolor duo consetetur. 
       </CardContent>
-      <CardFooter className="space-y-0 space-x-3.5">
+      <CardFooter className="space-y-0 space-x-2.5">
         <Badge variant="secondary">astro</Badge>
         <Badge>refac</Badge>
         <Badge>styles</Badge>
