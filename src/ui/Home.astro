@@ -4,26 +4,9 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@component
 import { Badge } from "@components/badge/badge";
 import { Button } from "@components/button/button"
 import { Avatar } from "@components/avatar/avatar";
-import { githubUserEvents, GH_USER } from "@constant/github.constant";
-import { HttpRequestBuilder } from "src/libs/http";
-import { type GithubEvent } from "@models/github.models";
+import { Projects } from "@layouts/client/projects";
 
-const headers: Record<string, string> = {
-  "X-Github-Api-Version": "2022-11-28"
-};
 
-const pagination: Record<string, string> = {
-  "per_page": "5", "page": "1"
-}
-
-const http = new HttpRequestBuilder<GithubEvent[]>()
-  .headers(headers)
-  .params(pagination)
-  .method("get")
-  .url(githubUserEvents(GH_USER))
-  .build();
-
-const commits = await http.fetch();
 
 ---
 <article class="h-auto w-full flex flex-col mt-20 py-10 items-start justify-center space-y-14"> 
@@ -49,47 +32,6 @@ const commits = await http.fetch();
           <File className="text-woodsmoke-400"/>
         </Button>
       </div>
-    </div>
-  </section>
-  <section class="w-full flex flex-col space-y-5">
-    <h1 class="text-xl text-woodsmoke-50 font-semibold tracking-wide">Projects</h1>
-    <div class="w-full h-auto grid grid-cols-2 grid-flow-row auto-rows-max gap-4">
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex justify-between">
-            <div class="w-max h-auto">
-              <h2 class="text-woodsmoke-50 text-base">Lorem Ipsum</h2>
-            </div>
-            <span class="text-woodsmoke-400 text-sm font-semibold tracking-wide">v0.0.0</span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="text-woodsmoke-200 text-sm">
-          Voluptua kasd sed consequat iriure sanctus.
-        </CardContent>
-        <CardFooter className="space-y-0 space-x-3.5">
-          <Badge variant="secondary">astro</Badge>
-          <Badge>tailwindcss</Badge>
-          <Badge>react</Badge>
-        </CardFooter>
-      </Card>
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex justify-between">
-            <div class="w-max h-auto">
-              <h2 class="text-woodsmoke-50 text-base">Lorem Ipsum</h2>
-            </div>
-            <span class="text-woodsmoke-400 text-sm font-semibold tracking-wide">v0.0.0</span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="text-woodsmoke-200 text-sm">
-          Voluptua kasd sed consequat iriure sanctus.
-        </CardContent>
-        <CardFooter className="space-y-0 space-x-3.5">
-          <Badge variant="secondary">astro</Badge>
-          <Badge>tailwindcss</Badge>
-          <Badge>react</Badge>
-        </CardFooter>
-      </Card>
     </div>
   </section>
   <section class="w-full flex flex-col space-y-5">
@@ -167,24 +109,6 @@ const commits = await http.fetch();
   </section>
   <section class="w-full flex flex-col space-y-5">
     <h2 class="text-xl text-woodsmoke-50 font-semibold tracking-wide">Commits</h2>
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex justify-between">
-          <div class="h-max w-auto">
-            <h3 class="text-woodsmoke-50 text-base inline-block">Layer 8 Error</h3>
-            <span class="text-woodsmoke-400 text-base">&bullet; Blog</span>
-          </div>
-          <span class="text-woodsmoke-200 text-sm">Jan 4, 2025</span>
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="text-woodsmoke-200 text-sm">
-        Ullamcorper nonummy dolor sanctus no invidunt kasd ipsum sit in facilisi eu dolore dolor duo consetetur. 
-      </CardContent>
-      <CardFooter className="space-y-0 space-x-2.5">
-        <Badge variant="secondary">astro</Badge>
-        <Badge>refac</Badge>
-        <Badge>styles</Badge>
-      </CardFooter>
-    </Card>
+    <Projects client:load/>
   </section>
 </article>

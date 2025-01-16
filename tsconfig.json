@@ -7,27 +7,14 @@
       "@components/*": [
         "src/components/*"
       ],
-      "@pages/*": [
-        "src/pages/*"
-      ],
-      "@styles/*": [
-        "src/styles/*"
-      ],
-      "@layouts/*": [
-        "src/layouts/*"
-      ],
-      "@utils/*": [
-        "src/utils/*"
-      ],
-      "@ui/*":[
-        "src/ui/*"
-      ],
-      "@models/*": [
-        "src/models/*"
-      ],
-      "@constant/*": [
-        "src/constant/*"
-      ]
+      "@pages/*": [ "src/pages/*" ],
+      "@styles/*": [ "src/styles/*" ],
+      "@layouts/*": [ "src/layouts/*" ],
+      "@utils/*": [ "src/utils/*" ],
+      "@ui/*":[ "src/ui/*" ],
+      "@models/*": [ "src/models/*" ],
+      "@constant/*": [ "src/constant/*" ],
+      "@libs/*": ["src/libs/*"]
     },
     "jsx": "react-jsx",
     "jsxImportSource": "react"
