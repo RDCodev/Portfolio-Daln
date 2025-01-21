@@ -1,32 +1,52 @@
 ---
 import { Badge } from "@components/badge/badge";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@components/card/card";
-import { fetchUserEvents } from "src/hooks/fetchs/user-github";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@components/card/card";
+import { fetchUserEvents, fetchRepoCommits, fetchRepoInfo } from "@api/github/UserEvents";
+import { JSONPath } from "jsonpath-plus";
 
 const { events } = await fetchUserEvents();
 
+const uniqueRepos = new Set<string>(
+  JSONPath({ path: "$..repo.name", json: events })
+);
+
+const [repo] = uniqueRepos;
+
+const { commits } = await fetchRepoCommits(repo);
+const { info } = await fetchRepoInfo(repo);
+
+console.log(info)
+
 ---
-{ 
-  events.map(
-    event =>
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex justify-between">
-            <div class="h-max w-auto">
-              <h3 class="text-woodsmoke-50 text-base inline-block">Layer 8 Error</h3>
-              <span class="text-woodsmoke-400 text-base">&bullet; Blog</span>
-            </div>
-            <span class="text-woodsmoke-200 text-sm">Jan 4, 2025</span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="text-woodsmoke-200 text-sm">
-          Ullamcorper nonummy dolor sanctus no invidunt kasd ipsum sit in facilisi eu dolore dolor duo consetetur. 
-        </CardContent>
-        <CardFooter className="space-y-0 space-x-2.5">
-          <Badge variant="secondary">astro</Badge>
-          <Badge>refac</Badge>
-          <Badge>styles</Badge>
-        </CardFooter>
-      </Card>
-  )
+
+{
+  commits.map((cmt) => (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex justify-between">
+          <div class="h-max w-auto">
+            <h3 class="text-woodsmoke-50 text-base inline-block">
+              Layer 8 Error
+            </h3>
+            <span class="text-woodsmoke-400 text-base">&bullet; Blog</span>
+          </div>
+          <span class="text-woodsmoke-200 text-sm">Jan 4, 2025</span>
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="text-woodsmoke-200 text-sm">
+        { cmt.commit.message }
+      </CardContent>
+      <CardFooter className="space-y-0 space-x-2.5">
+        <Badge variant="secondary">astro</Badge>
+        <Badge>refac</Badge>
+        <Badge>styles</Badge>
+      </CardFooter>
+    </Card>
+  ))
 }
