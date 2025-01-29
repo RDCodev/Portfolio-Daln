@@ -5,7 +5,7 @@ export interface GithubEvent {
   repo:       GithubRepo;
   payload:    GithubPayload;
   public:     boolean;
-  created_at: Date;
+  created_at: string;
 }
 
 export interface GithubActor {

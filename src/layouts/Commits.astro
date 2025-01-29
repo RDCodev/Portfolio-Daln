@@ -7,45 +7,44 @@ import {
   CardHeader,
   CardTitle,
 } from "@components/card/card";
-import { fetchUserEvents, fetchRepoCommits, fetchRepoInfo } from "@api/github/UserEvents";
-import { JSONPath } from "jsonpath-plus";
+import fetchGithubCommits from "@api/github/fetchGithubCommits"
+import { DateTime } from "luxon";
 
-const { events } = await fetchUserEvents();
+const { repos, commits } = await fetchGithubCommits();
 
-const uniqueRepos = new Set<string>(
-  JSONPath({ path: "$..repo.name", json: events })
-);
-
-const [repo] = uniqueRepos;
-
-const { commits } = await fetchRepoCommits(repo);
-const { info } = await fetchRepoInfo(repo);
-
-console.log(info)
+const toDateTime = (date: string) => {
+  return DateTime.fromISO(date).toLocaleString(DateTime.DATE_MED);
+}
 
 ---
 
 {
-  commits.map((cmt) => (
+  commits.map(({ repo: { name }, commit, created_at }) => (
     <Card>
       <CardHeader>
         <CardTitle className="flex justify-between">
           <div class="h-max w-auto">
             <h3 class="text-woodsmoke-50 text-base inline-block">
-              Layer 8 Error
+              { repos[name].name.replace(/[^a-zA-Z0-9\s]/g, ' ') }
             </h3>
-            <span class="text-woodsmoke-400 text-base">&bullet; Blog</span>
+            <span class="text-woodsmoke-400  mx-1">&bullet;</span>
+            <span class="text-woodsmoke-400 text-base">Blog</span>
           </div>
-          <span class="text-woodsmoke-200 text-sm">Jan 4, 2025</span>
+          <span class="text-woodsmoke-200 text-sm">{ toDateTime(created_at) }</span>
         </CardTitle>
       </CardHeader>
       <CardContent className="text-woodsmoke-200 text-sm">
-        { cmt.commit.message }
+        { commit.message }
       </CardContent>
       <CardFooter className="space-y-0 space-x-2.5">
-        <Badge variant="secondary">astro</Badge>
-        <Badge>refac</Badge>
-        <Badge>styles</Badge>
+        <Badge variant="secondary">
+          { repos[name].language.toLowerCase() }
+        </Badge>
+        { 
+          repos[name].topics.map((topic) => (
+            <Badge>{ topic }</Badge>
+          ))
+        }
       </CardFooter>
     </Card>
   ))
