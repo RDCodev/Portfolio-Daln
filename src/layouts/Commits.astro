@@ -26,10 +26,16 @@ const toRepoTitle = (header: string) => {
   return { scope, title }
 }
 
+const toConventionalCommit = (message: string) => {
+  let [type, msg] = message.split(":");
+
+  return { type, msg }
+}
+
 ---
 
 {
-  !commits.length ? 
+  !commits.length ?
     (
       <span class="text-woodsmoke-200 text-base font-medium">No commits for yet... 😓</span>
     ) 
@@ -41,20 +47,25 @@ const toRepoTitle = (header: string) => {
           <CardTitle className="flex justify-between">
             <div class="h-max w-auto">
               <h3 class="text-woodsmoke-50 text-base inline-block">
-                { toRepoTitle(repos[name].name).title }
+                { toRepoTitle(repos[name]?.name).title }
               </h3>
               <span class="text-woodsmoke-400  mx-1">&bullet;</span>
               <span class="text-woodsmoke-400 text-base">
-                { toRepoTitle(repos[name].name).scope }
+                { toRepoTitle(repos[name]?.name).scope }
               </span>
             </div>
             <span class="text-woodsmoke-200 text-sm">{ toDateTime(created_at) }</span>
           </CardTitle>
         </CardHeader>
         <CardContent className="text-woodsmoke-200 text-sm">
-          { commit.message }
+          { toConventionalCommit(commit.message).msg }
         </CardContent>
         <CardFooter className="space-y-0 space-x-2.5">
+          {
+            <Badge variant="secondary">
+              { toConventionalCommit(commit.message).type }
+            </Badge>
+          }
           { 
             repos[name]?.topics.map((topic) => (
               <Badge>{ topic }</Badge>
