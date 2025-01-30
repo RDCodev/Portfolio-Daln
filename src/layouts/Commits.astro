@@ -16,6 +16,14 @@ const toDateTime = (date: string) => {
   return DateTime.fromISO(date).toLocaleString(DateTime.DATE_MED);
 }
 
+const toRepoTitle = (title: string) => {
+  const [scope, ...name] = title.split("-");
+
+  return { scope, name }
+}
+
+console.log(repos, commits)
+
 ---
 
 {
@@ -37,9 +45,6 @@ const toDateTime = (date: string) => {
         { commit.message }
       </CardContent>
       <CardFooter className="space-y-0 space-x-2.5">
-        <Badge variant="secondary">
-          { repos[name].language.toLowerCase() }
-        </Badge>
         { 
           repos[name].topics.map((topic) => (
             <Badge>{ topic }</Badge>
