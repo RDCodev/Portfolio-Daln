@@ -37,5 +37,7 @@ export default async function fetchGithubCommits() {
     commits.map((commit) => ({ ...rest, commit }))
   );
 
+  commits = commits.filter(({repo: {name}}) => repos[name]!);
+
   return { repos, commits };
 }

@@ -10,47 +10,58 @@ import {
 import fetchGithubCommits from "@api/github/fetchGithubCommits"
 import { DateTime } from "luxon";
 
+const CHARACTER_REGEX = /[^a-zA-Z0-9\s]/g
+
 const { repos, commits } = await fetchGithubCommits();
 
 const toDateTime = (date: string) => {
   return DateTime.fromISO(date).toLocaleString(DateTime.DATE_MED);
 }
 
-const toRepoTitle = (title: string) => {
-  const [scope, ...name] = title.split("-");
+const toRepoTitle = (header: string) => {
 
-  return { scope, name }
+  let [scope, title] = header.split("-");
+  title = title.replace(CHARACTER_REGEX, ' ');
+
+  return { scope, title }
 }
-
-console.log(repos, commits)
 
 ---
 
 {
-  commits.map(({ repo: { name }, commit, created_at }) => (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex justify-between">
-          <div class="h-max w-auto">
-            <h3 class="text-woodsmoke-50 text-base inline-block">
-              { repos[name].name.replace(/[^a-zA-Z0-9\s]/g, ' ') }
-            </h3>
-            <span class="text-woodsmoke-400  mx-1">&bullet;</span>
-            <span class="text-woodsmoke-400 text-base">Blog</span>
-          </div>
-          <span class="text-woodsmoke-200 text-sm">{ toDateTime(created_at) }</span>
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="text-woodsmoke-200 text-sm">
-        { commit.message }
-      </CardContent>
-      <CardFooter className="space-y-0 space-x-2.5">
-        { 
-          repos[name].topics.map((topic) => (
-            <Badge>{ topic }</Badge>
-          ))
-        }
-      </CardFooter>
-    </Card>
-  ))
+  !commits.length ? 
+    (
+      <span class="text-woodsmoke-200 text-base font-medium">No commits for yet... 😓</span>
+    ) 
+  : 
+    (
+      commits.map(({ repo: { name }, commit, created_at }) => (
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex justify-between">
+            <div class="h-max w-auto">
+              <h3 class="text-woodsmoke-50 text-base inline-block">
+                { toRepoTitle(repos[name].name).title }
+              </h3>
+              <span class="text-woodsmoke-400  mx-1">&bullet;</span>
+              <span class="text-woodsmoke-400 text-base">
+                { toRepoTitle(repos[name].name).scope }
+              </span>
+            </div>
+            <span class="text-woodsmoke-200 text-sm">{ toDateTime(created_at) }</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="text-woodsmoke-200 text-sm">
+          { commit.message }
+        </CardContent>
+        <CardFooter className="space-y-0 space-x-2.5">
+          { 
+            repos[name]?.topics.map((topic) => (
+              <Badge>{ topic }</Badge>
+            ))
+          }
+        </CardFooter>
+      </Card>
+    ))
+  )
 }
