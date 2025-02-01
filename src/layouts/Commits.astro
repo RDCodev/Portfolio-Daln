@@ -9,8 +9,11 @@ import {
 } from "@components/card/card";
 import fetchGithubCommits from "@api/github/fetchGithubCommits"
 import { DateTime } from "luxon";
+import { parseTitle } from "@utils/common";
+import { CommitParser } from "conventional-commits-parser"
+import type { RepositoryTitle } from "@utils/types/common.types";
 
-const CHARACTER_REGEX = /[^a-zA-Z0-9\s]/g
+const parser = new CommitParser();
 
 const { repos, commits } = await fetchGithubCommits();
 
@@ -18,12 +21,18 @@ const toDateTime = (date: string) => {
   return DateTime.fromISO(date).toLocaleString(DateTime.DATE_MED);
 }
 
-const toRepoTitle = (header: string) => {
+const parseCommitTitle = (_title: string) => {
+  
+  const msg = "Unknown 🫠";
 
-  let [scope, title] = header.split("-");
-  title = title.replace(CHARACTER_REGEX, ' ');
+  const { name } = repos[_title];
+  const parse = parseTitle(name, "-")
 
-  return { scope, title }
+  return !parse ? msg : parse;
+}
+
+const parseCvm = (msg: string) => {
+  return parser.parse(msg);
 }
 
 ---
@@ -39,22 +48,39 @@ const toRepoTitle = (header: string) => {
       <Card>
         <CardHeader>
           <CardTitle className="flex justify-between">
-            <div class="h-max w-auto">
-              <h3 class="text-woodsmoke-50 text-base inline-block">
-                { toRepoTitle(repos[name].name).title }
-              </h3>
-              <span class="text-woodsmoke-400  mx-1">&bullet;</span>
-              <span class="text-woodsmoke-400 text-base">
-                { toRepoTitle(repos[name].name).scope }
-              </span>
-            </div>
-            <span class="text-woodsmoke-200 text-sm">{ toDateTime(created_at) }</span>
+            {
+              typeof parseCommitTitle(name) === "object" ? 
+                (
+                  <div class="h-max w-auto">
+                    <h3 class="text-woodsmoke-50 text-base inline-block">
+                      { (parseCommitTitle(name) as RepositoryTitle).title }
+                    </h3>
+                    <span class="text-woodsmoke-400  mx-1">&bullet;</span>
+                    <span class="text-woodsmoke-400 text-base">
+                      { (parseCommitTitle(name) as RepositoryTitle).scope }
+                    </span>
+                  </div>
+                ) : 
+                (
+                  <h3 class="text-woodsmoke-50 text-base inline-block">
+                    { (parseCommitTitle(name) as string) }
+                  </h3>
+                ) 
+            }
+            <span class="text-woodsmoke-200 text-sm">
+              { toDateTime(created_at) }
+            </span>
           </CardTitle>
         </CardHeader>
         <CardContent className="text-woodsmoke-200 text-sm">
-          { commit.message }
+          { parseCvm(commit.message)["subject"] }
         </CardContent>
         <CardFooter className="space-y-0 space-x-2.5">
+          {
+            <Badge variant="secondary">
+              { parseCvm(commit.message)["type"] }
+            </Badge>
+          }
           { 
             repos[name]?.topics.map((topic) => (
               <Badge>{ topic }</Badge>
