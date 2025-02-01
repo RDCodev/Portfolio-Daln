@@ -17,7 +17,7 @@ const parser = new CommitParser();
 
 const { repos, commits } = await fetchGithubCommits();
 
-const toDateTime = (date: string) => {
+const parseDate = (date: string) => {
   return DateTime.fromISO(date).toLocaleString(DateTime.DATE_MED);
 }
 
@@ -38,7 +38,7 @@ const parseCvm = (msg: string) => {
 ---
 
 {
-  !commits.length ? 
+  !commits.length ?
     (
       <span class="text-woodsmoke-200 text-base font-medium">No commits for yet... 😓</span>
     ) 
@@ -68,7 +68,7 @@ const parseCvm = (msg: string) => {
                 ) 
             }
             <span class="text-woodsmoke-200 text-sm">
-              { toDateTime(created_at) }
+              { parseDate(created_at) }
             </span>
           </CardTitle>
         </CardHeader>

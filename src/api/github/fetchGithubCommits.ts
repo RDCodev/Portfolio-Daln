@@ -33,11 +33,10 @@ export default async function fetchGithubCommits() {
     repos[repo.full_name] = repo;
   }
 
-  commits = commitsEvents.flatMap(({ payload: { commits }, ...rest }) =>
-    commits.map((commit) => ({ ...rest, commit }))
+  commits = commitsEvents.flatMap(({ payload: { commits }, ...rest }) => commits
+    .filter(() => repos[rest.repo.name]!)
+    .map((commit) => ({ ...rest, commit }))
   );
-
-  commits = commits.filter(({repo: {name}}) => repos[name]!);
 
   return { repos, commits };
 }
