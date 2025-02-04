@@ -45,7 +45,7 @@ const parseCvm = (msg: string) => {
   : 
     (
       commits.map(({ repo: { name }, commit, created_at }) => (
-      <Card>
+      <Card data-aos="fade-up"> 
         <CardHeader>
           <CardTitle className="flex justify-between">
             {

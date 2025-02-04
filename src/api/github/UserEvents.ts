@@ -1,4 +1,4 @@
-import axios from "axios";
+import { axios } from "@libs/fetcher";
 import type { GithubEvent } from "@api/types/UserEvents.type";
 import type { RepoCommit } from "@api/types/RepoCommits.type";
 import type { Repository } from "@api/types/Repository.type";
