@@ -40,7 +40,7 @@ const parseCvm = (msg: string) => {
 {
   !commits.length ?
     (
-      <span class="text-woodsmoke-200 text-base font-medium">No commits for yet... 😓</span>
+      <span class="text-woodsmoke-900 dark:text-woodsmoke-200 text-base font-medium">No commits for yet... 😓</span>
     ) 
   : 
     (
@@ -52,27 +52,27 @@ const parseCvm = (msg: string) => {
               typeof parseCommitTitle(name) === "object" ? 
                 (
                   <div class="h-max w-auto">
-                    <h3 class="text-woodsmoke-50 text-base inline-block">
+                    <h3 class="text-woodsmoke-950 dark:text-woodsmoke-50 text-base inline-block">
                       { (parseCommitTitle(name) as RepositoryTitle).title }
                     </h3>
-                    <span class="text-woodsmoke-400  mx-1">&bullet;</span>
-                    <span class="text-woodsmoke-400 text-base">
+                    <span class="text-woodsmoke-900 dark:text-woodsmoke-400  mx-1">&bullet;</span>
+                    <span class="text-woodsmoke-800 dark:text-woodsmoke-400 text-base">
                       { (parseCommitTitle(name) as RepositoryTitle).scope }
                     </span>
                   </div>
                 ) : 
                 (
-                  <h3 class="text-woodsmoke-50 text-base inline-block">
+                  <h3 class="text-woodsmoke-950 dark:text-woodsmoke-50 text-base inline-block">
                     { (parseCommitTitle(name) as string) }
                   </h3>
                 ) 
             }
-            <span class="text-woodsmoke-200 text-sm">
+            <span class="text-woodsmoke-800 dark:text-woodsmoke-200 text-sm">
               { parseDate(created_at) }
             </span>
           </CardTitle>
         </CardHeader>
-        <CardContent className="text-woodsmoke-200 text-sm">
+        <CardContent className="text-woodsmoke-950 dark:text-woodsmoke-200 text-sm">
           { parseCvm(commit.message)["subject"] }
         </CardContent>
         <CardFooter className="space-y-0 space-x-2.5">

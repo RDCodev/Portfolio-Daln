@@ -6,25 +6,25 @@ import Commits from "@layouts/Commits.astro";
 ---
 <article class="h-auto w-full flex flex-col mt-20 py-10 items-start justify-center space-y-14"> 
   <section class="w-auto flex flex-col items-start justify-center space-y-5">
-    <h1 class="text-4xl text-woodsmoke-50 font-semibold tracking-wide">Daln</h1>
+    <h1 class="text-4xl text-woodsmoke-950 dark:text-woodsmoke-50 font-semibold tracking-wide">Daln.dev</h1>
     <div class="w-auto h-max">
-      <p class="text-woodsmoke-200 font-medium tracking-tight">Software Engineer & Backend Developer.</p>
-      <p class="text-woodsmoke-200 text-base font-medium tracking-tight">Feel free to use my social media's to stay in touch.</p>
+      <p class="text-woodsmoke-900 dark:text-woodsmoke-200 font-medium tracking-tight">Software Engineer & Backend Developer.</p>
+      <p class="text-woodsmoke-900 dark:text-woodsmoke-200 text-base font-medium tracking-tight">Feel free to use my social media's to stay in touch.</p>
       <div class="inline-flex items-center justify-start space-x-5 mt-8">
-        <Button variant="raw" size="icon">
-          <Github className="text-woodsmoke-400"/>
+        <Button variant="link" size="icon" href="#github">
+          <Github className="text-woodsmoke-900 dark:text-woodsmoke-400"/>
         </Button>
-        <Button variant="raw" size="icon">
-          <Linkedin className="text-woodsmoke-400"/>
+        <Button variant="link" size="icon" href="#linkedin">
+          <Linkedin className="text-woodsmoke-900 dark:text-woodsmoke-400"/>
         </Button>
-        <Button variant="raw" size="icon">
-          <Twitter className="text-woodsmoke-400"/>
+        <Button variant="link" size="icon" href="#twitter">
+          <Twitter className="text-woodsmoke-900 dark:text-woodsmoke-400"/>
         </Button>
-        <Button variant="raw" size="icon">
-          <AtSign className="text-woodsmoke-400"/>
+        <Button variant="link" size="icon" href="#mail">
+          <AtSign className="text-woodsmoke-900 dark:text-woodsmoke-400"/>
         </Button>
-        <Button variant="raw" size="icon">
-          <File className="text-woodsmoke-400"/>
+        <Button variant="link" size="icon" href="#resume">
+          <File className="text-woodsmoke-900 dark:text-woodsmoke-400"/>
         </Button>
       </div>
     </div>
@@ -36,7 +36,7 @@ import Commits from "@layouts/Commits.astro";
     </div>
   </section> -->
   <section class="w-full flex flex-col space-y-5">
-    <h2 class="text-xl text-woodsmoke-50 font-semibold tracking-wide">Commits</h2>    
+    <h2 class="text-xl text-woodsmoke-950 dark:text-woodsmoke-50 font-semibold tracking-wide">Commits</h2>    
     <div class="flex flex-col space-y-5 mt-5">
       <Commits />      
     </div>
