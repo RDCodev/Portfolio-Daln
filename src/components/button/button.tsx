@@ -17,6 +17,8 @@ const buttonVariants = cva(
         ghost: 
           'bg-transparent text-woodsmoke-50 hover:bg-woodsmoke-500/50',
         raw: 
+          'bg-transparent text-woodsmoke-50',
+        link: 
           'bg-transparent text-woodsmoke-50'
       },
       size: {
@@ -38,13 +40,26 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
   VariantProps<typeof buttonVariants> { };
 
-const Button: React.FC<ButtonProps> = ({ className, variant, size, disabled, ...props }) =>
+export interface LinkedButtonProps 
+  extends React.AnchorHTMLAttributes<HTMLAnchorElement> { };
+
+const Button: React.FC<LinkedButtonProps & ButtonProps> = ({ className, variant, size, disabled, href, ...props }) =>
 (
-  <button
-    className={cn(buttonVariants({ variant, size, className }))}
-    disabled={disabled || undefined}
-    {...props}
-  />
+  variant !== "link" ? 
+    (
+      <button
+        className={cn(buttonVariants({ variant, size, className }))}
+        disabled={disabled || undefined}
+        {...props}
+      />
+    ) : 
+    (
+      <a
+        href={href}
+        className={cn(buttonVariants({ variant, size, className }))}
+        {...props}
+      />
+    )
 );
 
 export { Button, buttonVariants }
