@@ -7,7 +7,6 @@ export function parseTitle(_title: string, identifier: string): RepositoryTitle 
   let [scope, title] = _title.split(identifier);
 
   title = title.replace(/[^a-zA-Z0-9\s]/g, " ")
-
   
   return { scope, title }
 }
