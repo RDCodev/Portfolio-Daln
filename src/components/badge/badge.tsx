@@ -10,7 +10,7 @@ const badgeVariants = cva(
         default: 
           'bg-woodsmoke-700 text-woodsmoke-50',
         secondary: 
-          'bg-woodsmoke-100 text-woodsmoke-950',        
+          'bg-woodsmoke-950 text-woodsmoke-100 dark:bg-woodsmoke-100 dark:text-woodsmoke-950',        
       }
     },
     defaultVariants: {

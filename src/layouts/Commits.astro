@@ -47,7 +47,7 @@ const parseCvm = (msg: string) => {
       commits.map(({ repo: { name }, commit, created_at }) => (
       <Card data-aos="fade-in"> 
         <CardHeader>
-          <CardTitle className="flex justify-between">
+          <CardTitle className="flex justify-between items-center">
             {
               typeof parseCommitTitle(name) === "object" ? 
                 (
@@ -55,8 +55,8 @@ const parseCvm = (msg: string) => {
                     <h3 class="text-woodsmoke-950 dark:text-woodsmoke-50 text-base inline-block">
                       { (parseCommitTitle(name) as RepositoryTitle).title }
                     </h3>
-                    <span class="text-woodsmoke-900 dark:text-woodsmoke-400  mx-1">&bullet;</span>
-                    <span class="text-woodsmoke-800 dark:text-woodsmoke-400 text-base">
+                    <span class="text-woodsmoke-600 dark:text-woodsmoke-400  mx-1">&bullet;</span>
+                    <span class="text-woodsmoke-600 dark:text-woodsmoke-400 text-base">
                       { (parseCommitTitle(name) as RepositoryTitle).scope }
                     </span>
                   </div>
