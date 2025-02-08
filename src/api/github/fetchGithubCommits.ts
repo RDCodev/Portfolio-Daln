@@ -3,7 +3,7 @@ import { JSONPath } from "jsonpath-plus";
 import type { Repository } from "@api/types/Repository.type";
 import type { GithubCommit, GithubEvent } from "@api/types/UserEvents.type";
 
-type Commit = Omit<GithubEvent, "payload"> & { commit: GithubCommit }
+export type FetchedCommit = Omit<GithubEvent, "payload"> & { commit: GithubCommit }
 
 export default async function fetchGithubCommits() {
 
@@ -11,7 +11,7 @@ export default async function fetchGithubCommits() {
   const reposNamePath     = "$..repo.name";
 
   let repos   : Record<string, Repository>  = {};
-  let commits : Commit[]                    = [];
+  let commits : FetchedCommit[]                    = [];
 
   const { events } = await fetchUserEvents();
 

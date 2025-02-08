@@ -7,15 +7,21 @@ import {
   CardHeader,
   CardTitle,
 } from "@components/card/card";
-import fetchGithubCommits from "@api/github/fetchGithubCommits"
 import { DateTime } from "luxon";
 import { parseTitle } from "@utils/common";
 import { CommitParser } from "conventional-commits-parser"
 import type { RepositoryTitle } from "@utils/types/common.types";
+import type { Repository } from "@api/types/Repository.type";
+import type { FetchedCommit } from "@api/github/fetchGithubCommits";
+
+interface Props {
+  repos: Record<string, Repository>;
+  commits: FetchedCommit[];
+}
+
+const { repos, commits } = Astro.props;
 
 const parser = new CommitParser();
-
-const { repos, commits } = await fetchGithubCommits();
 
 const parseDate = (date: string) => {
   return DateTime.fromISO(date).toLocaleString(DateTime.DATE_MED);
@@ -52,9 +58,12 @@ const parseCvm = (msg: string) => {
               typeof parseCommitTitle(name) === "object" ? 
                 (
                   <div class="h-max w-auto">
-                    <h3 class="text-woodsmoke-950 dark:text-woodsmoke-50 text-base inline-block">
+                    <a 
+                      href={ repos[name]?.html_url }
+                      target="_blank"
+                      class="text-woodsmoke-950 dark:text-woodsmoke-50 text-base inline-block decoration-woodsmoke-100 underline-offset-4 hover:underline ">
                       { (parseCommitTitle(name) as RepositoryTitle).title }
-                    </h3>
+                    </a>
                     <span class="text-woodsmoke-600 dark:text-woodsmoke-400  mx-1">&bullet;</span>
                     <span class="text-woodsmoke-600 dark:text-woodsmoke-400 text-base">
                       { (parseCommitTitle(name) as RepositoryTitle).scope }
