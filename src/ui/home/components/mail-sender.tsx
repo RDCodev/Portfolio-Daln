@@ -7,6 +7,7 @@ import { DialogTrigger } from "@components/dialog/dialog-trigger";
 import { DialogClose } from "@components/dialog/dialog-close";
 import { AtSign } from "lucide-react";
 import { Input } from "@components/input/input";
+import { TextArea } from "@components/text-area/text-area";
 
 export const MailSender: React.FC = () => (
   <Dialog>
@@ -16,15 +17,21 @@ export const MailSender: React.FC = () => (
       </Button>
     </DialogTrigger>
     <DialogContent>
-      <DialogTitle>Mail Sender</DialogTitle>      
-      <div className="flex flex-col space-y-3">
-        <div className="flex items-center justify-between">
-          <label htmlFor="" className="basis-auto">Subject</label>
-          <Input type="text" className="basis-4/5"/>
+      <DialogTitle>Message</DialogTitle>
+      <div className="flex flex-col space-y-3 py-3">
+        <div className="grid grid-cols-2 grid-rows-1 gap-5">
+          <div>
+            <label htmlFor="">First Name</label>
+            <Input type="text" className="mt-2.5"/>
+          </div>
+          <div>
+            <label htmlFor="">Last Name</label>
+            <Input type="text" className="mt-2.5"/>
+          </div>
         </div>
-        <div className="flex items-center justify-between">
-          <label htmlFor="" className="basis-auto">Message</label>
-          <Input type="text" className="basis-4/5"/>
+        <div>
+          <label htmlFor="email-message">Message</label>
+          <TextArea className="mt-2.5" id="email-message"/>
         </div>
       </div>
       <DialogFooter>
