@@ -1,8 +1,9 @@
 ---
-import { Github, Linkedin, Twitter, AtSign, File } from "lucide-react"
+import { Github, Linkedin, Twitter, File } from "lucide-react"
 import { Button } from "@components/button/button"
 import Commits from "@layouts/Commits.astro";
 import fetchGithubCommits from "@api/github/fetchGithubCommits"
+import { MailSender } from "./components/mail-sender";
 
 const { repos, commits } = await fetchGithubCommits();
 
@@ -23,21 +24,13 @@ const { repos, commits } = await fetchGithubCommits();
         <Button variant="link" size="icon" target="_blank" href="https://x.com/RDCodev">
           <Twitter className="text-woodsmoke-950 dark:text-woodsmoke-400 hover:scale-125 transition-all ease-in duration-100"/>
         </Button>
-        <Button className="invisible" variant="link" size="icon" target="_blank" href="#mail">
-          <AtSign className="text-woodsmoke-950 dark:text-woodsmoke-400 hover:scale-125 transition-all ease-in duration-100"/>
-        </Button>
+        <MailSender client:only="react"/>
         <Button className="invisible" variant="link" size="icon" target="_blank" href="#resume">
           <File className="text-woodsmoke-950 dark:text-woodsmoke-400 hover:scale-125 transition-all ease-in duration-100"/>
         </Button>
       </div>
     </div>
   </section>
-  <!-- <section class="w-full flex flex-col space-y-5">
-    <h2 class="text-xl text-woodsmoke-50 font-semibold tracking-wide">Projects</h2>
-    <div class="grid grid-flow-row auto-rows-auto grid-cols-2 gap-x-5 gap-5">
-      <Projects/>
-    </div>
-  </section> -->
   <section class="w-full flex flex-col space-y-5">
     <div class="h-max w-auto align-middle">
       <h2 class="text-xl inline-block text-woodsmoke-950 dark:text-woodsmoke-50 font-semibold tracking-wide">Commits</h2>
