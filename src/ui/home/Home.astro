@@ -1,5 +1,5 @@
 ---
-import { Github, Linkedin, Twitter, File } from "lucide-react"
+import { Github, Linkedin, Twitter } from "lucide-react"
 import { Button } from "@components/button/button"
 import Commits from "@layouts/Commits.astro";
 import fetchGithubCommits from "@api/github/fetchGithubCommits"
@@ -25,9 +25,6 @@ const { repos, commits } = await fetchGithubCommits();
           <Twitter className="text-woodsmoke-950 dark:text-woodsmoke-400 hover:scale-125 transition-all ease-in duration-100"/>
         </Button>
         <MailSender client:only="react"/>
-        <Button className="invisible" variant="link" size="icon" target="_blank" href="#resume">
-          <File className="text-woodsmoke-950 dark:text-woodsmoke-400 hover:scale-125 transition-all ease-in duration-100"/>
-        </Button>
       </div>
     </div>
   </section>
