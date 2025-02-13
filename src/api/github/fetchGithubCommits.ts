@@ -1,4 +1,4 @@
-import { fetchUserEvents, fetchRepoInfo } from "@api/github/UserEvents";
+import { fetchUserEvents, fetchRepoInfo } from "@api/github/fetchUserEvents";
 import { JSONPath } from "jsonpath-plus";
 import type { Repository } from "@api/types/Repository.type";
 import type { GithubCommit, GithubEvent } from "@api/types/UserEvents.type";
