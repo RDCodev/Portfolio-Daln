@@ -8,7 +8,7 @@ export interface DialogDescriptionProps
 export const DialogDescription: React.FC<DialogDescriptionProps> = ({ className, ...props }) => (
   <DialogPrimitive.Description
     className={cn(
-      "text-xs font-normal text-woodsmoke-300", 
+      "text-sm font-normal text-woodsmoke-300", 
       className
     )}
     {...props}
