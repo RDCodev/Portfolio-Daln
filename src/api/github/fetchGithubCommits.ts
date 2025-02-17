@@ -7,17 +7,14 @@ export type FetchedCommit = Omit<GithubEvent, "payload"> & { commit: GithubCommi
 
 export default async function fetchGithubCommits() {
 
-  const commitEventsPath  = "$..[?(@.type==='PushEvent')]";
-  const reposNamePath     = "$..repo.name";
+  const reposNamePath = "$..repo.name";
 
-  let repos   : Record<string, Repository>  = {};
-  let commits : FetchedCommit[]                    = [];
+  let repos: Record<string, Repository> = {};
+  let commits: FetchedCommit[] = [];
 
   const { events } = await fetchUserEvents();
 
-  const commitsEvents = JSONPath<typeof events>({
-    path: commitEventsPath, json: events,
-  });
+  const commitsEvents = events.filter(({ type }) => type === "PushEvent");
 
   const uniqueRepos = await Promise.all(
     [

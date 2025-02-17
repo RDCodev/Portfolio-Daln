@@ -1,12 +1,38 @@
-import type { RepositoryTitle } from "./types/common.types";
+export interface RepositoryTitle { 
+  scope: string
+  title: string
+}
 
 export function parseTitle(_title: string, identifier: string): RepositoryTitle | null {
   
-  if (!_title) return null;
+  if (!_title || !identifier) return null;
 
-  let [scope, title] = _title.split(identifier);
-
-  title = title.replace(/[^a-zA-Z0-9\s]/g, " ")
+  let [scope, ...name] = _title.split(identifier);
   
-  return { scope, title }
+  return { scope, title: name.join(" ") }
+}
+
+export type NameMode = "short";
+
+export interface NameProps {
+  firstName: string;
+  lastName?: string;
+  middleName?: string;
+  motherName?: string;
+  suffix?: string;
+  prefix?: string;
+}
+
+export function parseName(_name: NameProps, mode: NameMode = "short") {
+
+  const { firstName, lastName } = _name;
+
+  let name = "";
+
+  switch (mode) {
+    case "short":
+      name = `${ firstName } ${ lastName }`; break;
+  }
+
+  return name.trim();
 }

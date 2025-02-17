@@ -9,9 +9,10 @@ import { Input } from "@components/input/input";
 import { TextArea } from "@components/text-area/text-area";
 import { useForm } from "react-hook-form"
 import { DialogDescription } from "@components/dialog/dialog-description";
+import { actions } from "astro:actions";
 import axios from "axios";
 
-type MailSenderValues = {
+export type MailSenderValues = {
   firstName: string;
   lastName: string;
   message: string;
@@ -31,9 +32,10 @@ export const MailSender: React.FC = () => {
   const onDialogShowChange = (open: boolean) => !open && reset();
 
   const onSendMessage =  async (params: MailSenderValues) => {
-    const { data } = await axios.post("/api/daln/message", params);
 
-    console.log(data)
+    const { data, error } = await actions.send(params);
+
+    alert(data ? "Message sent successfully!" : error?.message);
   }
     
   const onSubmit = handleSubmit(onSendMessage);
@@ -41,14 +43,14 @@ export const MailSender: React.FC = () => {
   return (
     <Dialog onOpenChange={onDialogShowChange} modal={true}>
       <DialogTrigger asChild>
-        <Button className="ml-5" variant="raw" size="icon" disabled target="_blank" href="#mail">
+        <Button className="ml-5" variant="raw" size="icon" target="_blank" href="#mail">
           <SendHorizontal className="text-woodsmoke-950 dark:text-woodsmoke-400 hover:scale-125 transition-all ease-in duration-100"/>
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogTitle>Message</DialogTitle>
         <DialogDescription>Please provide me with your details and I will contact you as soon as possible. 👌</DialogDescription>
-        <form onSubmit={onSubmit} className="flex flex-col space-y-8 py-3">
+        <form onSubmit={onSubmit} method="POST" className="flex flex-col space-y-8 py-3">
           <div className="grid grid-cols-2 grid-rows-1 gap-5">
             <div className="relative inline-flex flex-col items-start">
               <label htmlFor="first-name" className="text-sm font-medium tracking-wide">First Name*</label>
