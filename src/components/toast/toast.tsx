@@ -5,16 +5,12 @@ import type React from "react";
 import { cn } from "@utils/cn";
 
 const toastVariants = cva(
-  '',
+  'group pointer-events-auto relative flex w-full items-center justify-between space-x-4 overflow-hidden rounded-md border p-6 pr-8 shadow-lg',
   {
     variants: {
       variant: {
         default: 
-          '',
-        success:
-          '',
-        warning:
-          '',
+          'border border-woodsmoke-900 bg-woodsmoke-950 text-woodsmoke-50',
         destructive:
           ''
       }

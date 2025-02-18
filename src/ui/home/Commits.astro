@@ -8,9 +8,8 @@ import {
   CardTitle,
 } from "@components/card/card";
 import { DateTime } from "luxon";
-import { parseTitle } from "@utils/common";
+import { parseTitle, type RepositoryTitle } from "@utils/common";
 import { CommitParser } from "conventional-commits-parser"
-import type { RepositoryTitle } from "@utils/types/common.types";
 import type { Repository } from "@api/types/Repository.type";
 import type { FetchedCommit } from "@api/github/fetchGithubCommits";
 

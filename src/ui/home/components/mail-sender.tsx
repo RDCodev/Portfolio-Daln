@@ -4,13 +4,13 @@ import { DialogContent } from "@components/dialog/dialog-content";
 import { DialogTitle } from "@components/dialog/dialog-title";
 import { DialogTrigger } from "@components/dialog/dialog-trigger";
 import { DialogClose } from "@components/dialog/dialog-close";
-import { AtSign, SendHorizontal } from "lucide-react";
+import { SendHorizontal } from "lucide-react";
 import { Input } from "@components/input/input";
 import { TextArea } from "@components/text-area/text-area";
 import { useForm } from "react-hook-form"
 import { DialogDescription } from "@components/dialog/dialog-description";
 import { actions } from "astro:actions";
-import axios from "axios";
+import { useToast } from "@hooks/use-toast";
 
 export type MailSenderValues = {
   firstName: string;
@@ -20,6 +20,8 @@ export type MailSenderValues = {
 }
 
 export const MailSender: React.FC = () => {
+
+  const { toast } = useToast();
 
   const { 
     reset,
@@ -35,7 +37,9 @@ export const MailSender: React.FC = () => {
 
     const { data, error } = await actions.send(params);
 
-    alert(data ? "Message sent successfully!" : error?.message);
+    toast({
+      description: data && "Message sent successfully!",
+    });
   }
     
   const onSubmit = handleSubmit(onSendMessage);
