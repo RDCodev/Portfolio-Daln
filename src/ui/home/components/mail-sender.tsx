@@ -11,6 +11,7 @@ import { useForm } from "react-hook-form"
 import { DialogDescription } from "@components/dialog/dialog-description";
 import { actions } from "astro:actions";
 import { useToast } from "@hooks/use-toast";
+import React from "react";
 
 export type MailSenderValues = {
   firstName: string;
@@ -21,8 +22,8 @@ export type MailSenderValues = {
 
 export const MailSender: React.FC = () => {
 
+  const [open, setOpen] = React.useState(false);
   const { toast } = useToast();
-
   const { 
     reset,
     register,
@@ -31,21 +32,24 @@ export const MailSender: React.FC = () => {
       mode: "onChange"
     });
 
-  const onDialogShowChange = (open: boolean) => !open && reset();
-
-  const onSendMessage =  async (params: MailSenderValues) => {
+  const onSendMessage =  async (params: MailSenderValues) => {    
 
     const { data, error } = await actions.send(params);
 
-    toast({
-      description: data && "Message sent successfully!",
-    });
-  }
+    !error ? 
+      toast({ description: "Message sent successfully!" }) : 
+      toast({ description: data && "Failed to send message!" })
     
-  const onSubmit = handleSubmit(onSendMessage);
+    reset();
+    setOpen(false);
+  }
+
+  React.useEffect(() => {
+    !open && reset();
+  }, [open])
 
   return (
-    <Dialog onOpenChange={onDialogShowChange} modal={true}>
+    <Dialog onOpenChange={setOpen} modal open={open}>
       <DialogTrigger asChild>
         <Button className="ml-5" variant="raw" size="icon" target="_blank" href="#mail">
           <SendHorizontal className="text-woodsmoke-950 dark:text-woodsmoke-400 hover:scale-125 transition-all ease-in duration-100"/>
@@ -54,7 +58,7 @@ export const MailSender: React.FC = () => {
       <DialogContent>
         <DialogTitle>Message</DialogTitle>
         <DialogDescription>Please provide me with your details and I will contact you as soon as possible. 👌</DialogDescription>
-        <form onSubmit={onSubmit} method="POST" className="flex flex-col space-y-8 py-3">
+        <form onSubmit={handleSubmit(onSendMessage)} method="POST" className="flex flex-col space-y-8 py-3">
           <div className="grid grid-cols-2 grid-rows-1 gap-5">
             <div className="relative inline-flex flex-col items-start">
               <label htmlFor="first-name" className="text-sm font-medium tracking-wide">First Name*</label>
