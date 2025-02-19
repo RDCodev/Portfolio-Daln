@@ -49,7 +49,7 @@ const parseCommitTitle = (_title: string) => {
   : 
     (
       commits.map(({ repo: { name }, commit, created_at }) => (
-      <Card className="animate-appear"> 
+      <Card className="duration-1000 animate-in fade-in"> 
         <CardHeader>
           <CardTitle>
             <div class="flex justify-between items-center">

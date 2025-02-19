@@ -22,15 +22,10 @@ export type MailSenderValues = {
 
 export const MailSender: React.FC = () => {
 
-  const [open, setOpen] = React.useState(false);
+  const [isOpen, setOpen] = React.useState(false);
   const { toast } = useToast();
-  const { 
-    reset,
-    register,
-    handleSubmit, 
-    formState: { errors, isValid } } = useForm<MailSenderValues>({ 
-      mode: "onChange"
-    });
+  const { reset, register, handleSubmit, formState: { errors, isValid } } = 
+    useForm<MailSenderValues>({ mode: "onChange" });
 
   const onSendMessage =  async (params: MailSenderValues) => {    
 
@@ -49,9 +44,9 @@ export const MailSender: React.FC = () => {
   }, [open])
 
   return (
-    <Dialog onOpenChange={setOpen} modal open={open}>
+    <Dialog onOpenChange={setOpen} modal={true} open={isOpen}>
       <DialogTrigger asChild>
-        <Button className="ml-5 animate-appear" disabled variant="raw" size="icon" target="_blank" href="#mail">
+        <Button className="ml-5 duration-1000 animate-in fade-in" disabled variant="raw" size="icon" target="_blank" href="#mail">
           <SendHorizontal className="text-woodsmoke-950 dark:text-woodsmoke-400 hover:scale-125 transition-all ease-in duration-100"/>
         </Button>
       </DialogTrigger>
@@ -63,15 +58,22 @@ export const MailSender: React.FC = () => {
             <div className="relative inline-flex flex-col items-start">
               <label htmlFor="first-name" className="text-sm font-medium tracking-wide">First Name*</label>
               <Input 
-                id="first-name" type="text" autoComplete="off" className="mt-2.5"
+                id="first-name" 
+                type="text" 
+                autoComplete="off" 
+                className="mt-2.5"
+                required
                 {...register("firstName", { required: true })}
               />
-              { errors.firstName && <small className="absolute bottom-[-20px] left-0 text-red-500 text-xs font-medium tracking-wide">First Name is required</small> }
+              { errors.firstName && <small role="alert" className="absolute bottom-[-20px] left-0 text-red-500 text-xs font-medium tracking-wide">First Name is required</small> }
             </div>
             <div className="inline-flex flex-col items-start">
               <label htmlFor="last-name" className="text-sm font-medium tracking-wide">Last Name</label>
               <Input 
-                id="last-name" type="text" autoComplete="off" className="mt-2.5"
+                id="last-name" 
+                type="text" 
+                autoComplete="off" 
+                className="mt-2.5"
                 {...register("lastName")}
               />
             </div>
@@ -79,11 +81,15 @@ export const MailSender: React.FC = () => {
           <div className="relative inline-flex flex-col items-start">
             <label htmlFor="email" className="text-sm font-medium tracking-wide">Email*</label>
             <Input 
-              id="email" type="email" autoComplete="off" className="mt-2.5"
+              id="email" 
+              type="email" 
+              autoComplete="off" 
+              className="mt-2.5"
+              required
               {...register("email", { required: true, pattern: /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/ })}
             />
             { errors.email && 
-              <small className="absolute bottom-[-20px] left-0 text-red-500 text-xs font-medium tracking-wide">
+              <small role="alert" className="absolute bottom-[-20px] left-0 text-red-500 text-xs font-medium tracking-wide fade-in">
                 { errors.email.type === "required" && "Email is required." }
                 { errors.email.type === "pattern" && "Email is not valid." }
               </small> 
@@ -91,10 +97,13 @@ export const MailSender: React.FC = () => {
           </div>
           <div className="relative inline-flex flex-col items-start">
             <label htmlFor="message" className="text-sm font-medium tracking-wide">Message*</label>
-            <TextArea id="message" className="mt-2.5"
+            <TextArea 
+              id="message" 
+              className="mt-2.5"
+              required
               {...register("message", { required: true })}
             />
-            { errors.message && <small className="absolute bottom-[-20px] left-0 text-red-500 text-xs font-medium tracking-wide">Message is required.</small> }
+            { errors.message && <small role="alert" className="absolute bottom-[-20px] left-0 text-red-500 text-xs font-medium tracking-wide">Message is required.</small> }
           </div>
           <div className="flex flex-row-reverse  sm:flex-row sm:justify-end sm:space-x-2">
             <Button type="submit" disabled={!isValid}>Send</Button>
