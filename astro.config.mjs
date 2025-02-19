@@ -15,7 +15,6 @@ export default defineConfig({
   }),
   vite: {
     ssr: {
-      noExternal: true,
       external: ['node:stream']
     }
   }
