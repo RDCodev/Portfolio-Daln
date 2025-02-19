@@ -12,5 +12,10 @@ export default defineConfig({
   output: "server",
   adapter: cloudflare({
     imageService: "cloudflare"
-  })
+  }),
+  vite: {
+    ssr: {
+      external: ['node:stream']
+    }
+  }
 });
