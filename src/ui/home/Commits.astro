@@ -9,7 +9,6 @@ import {
 } from "@components/card/card";
 import { DateTime } from "luxon";
 import { parseTitle, type RepositoryTitle } from "@utils/common";
-import { CommitParser } from "conventional-commits-parser"
 import type { Repository } from "@api/types/Repository.type";
 import type { FetchedCommit } from "@api/github/fetchGithubCommits";
 
@@ -19,8 +18,8 @@ interface Props {
 }
 
 const { repos, commits } = Astro.props;
-
-const parser = new CommitParser();
+/* 
+const parser = new CommitParser(); */
 
 const parseDate = (date: string) => {
   return DateTime.fromISO(date).toLocaleString(DateTime.DATE_MED);
@@ -36,9 +35,9 @@ const parseCommitTitle = (_title: string) => {
   return !parse ? msg : parse;
 }
 
-const parseCvm = (msg: string) => {
+/* const parseCvm = (msg: string) => {
   return parser.parse(msg);
-}
+} */
 
 ---
 
@@ -83,16 +82,16 @@ const parseCvm = (msg: string) => {
         </CardHeader>
         <CardContent className="text-woodsmoke-950 dark:text-woodsmoke-200 text-sm">
           <p class="leading-snug text-wrap">
-            { parseCvm(commit.message)["subject"] }
+            { commit.message }
           </p>
         </CardContent>
         <CardFooter>
           <div class="flex flex-wrap grow items-center space-y-0 gap-2.5">
-          {
+          {/* {
             <Badge variant="secondary">
               { parseCvm(commit.message)["type"] }
             </Badge>
-          }
+          } */}
           { 
             repos[name]?.topics.map((topic) => (
               <Badge>{ topic }</Badge>

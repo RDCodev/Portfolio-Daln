@@ -30,6 +30,6 @@ const { title } = Astro.props;
       <slot/>
     </main>
     <Notification/>
-    <Toaster />
+    <Toaster client:only="react"/>
   </body>
 </html>
