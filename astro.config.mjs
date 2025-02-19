@@ -10,5 +10,7 @@ import cloudflare from '@astrojs/cloudflare';
 export default defineConfig({
   integrations: [tailwind(), react()],
   output: "server",
-  adapter: cloudflare()
+  adapter: cloudflare({
+    imageService: "cloudflare"
+  })
 });
