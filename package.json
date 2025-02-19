@@ -12,8 +12,8 @@
   "dependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/cloudflare": "^12.2.1",
-    "@astrojs/react": "^4.1.2",
-    "@astrojs/tailwind": "^5.1.2",
+    "@astrojs/react": "4.2.0",
+    "@astrojs/tailwind": "6.0.0",
     "@radix-ui/react-avatar": "^1.1.2",
     "@radix-ui/react-dialog": "^1.1.6",
     "@radix-ui/react-toast": "^1.2.6",
@@ -23,7 +23,7 @@
     "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
     "aos": "^2.3.4",
-    "astro": "^4.16.9",
+    "astro": "5.3.0",
     "axios": "^1.7.9",
     "axios-cache-interceptor": "^1.6.2",
     "class-variance-authority": "^0.7.0",
@@ -42,7 +42,11 @@
     "swr": "^2.3.0",
     "tailwind-merge": "^2.5.4",
     "tailwindcss": "^3.4.14",
+    "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.6.3",
     "zustand": "^5.0.3"
+  },
+  "devDependencies": {
+    "wrangler": "^3.109.2"
   }
 }
