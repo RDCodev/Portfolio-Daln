@@ -1,42 +1,38 @@
 ---
 import { Github, Linkedin, Twitter } from "lucide-react"
 import { Button } from "@components/button/button"
+import { MailSender } from "@ui/home/components/mail-sender";
 import Commits from "@ui/home/Commits.astro";
-import fetchGithubCommits from "@api/github/fetchGithubCommits"
-import { MailSender } from "./components/mail-sender";
+import fetchGithubCommits from "@api/github/fetchGithubCommits";
 
 const { repos, commits } = await fetchGithubCommits();
 
 ---
-<article class="h-auto w-full flex flex-col mt-20 mb-20 items-start justify-center space-y-14"> 
-  <section class="w-auto flex flex-col items-start justify-center space-y-5">
-    <h1 class="text-4xl text-woodsmoke-950 dark:text-woodsmoke-50 font-semibold tracking-wide">Daln.dev</h1>
-    <div class="w-auto h-max">
-      <p class="text-woodsmoke-900 dark:text-woodsmoke-200 font-medium tracking-tight">Software Engineer & Backend Developer.</p>
-      <p class="text-woodsmoke-900 dark:text-woodsmoke-200 text-base font-medium tracking-tight">Feel free to use my social media's to stay in touch.</p>
-      <div class="inline-flex items-center justify-start space-x-5 mt-8">
-        <Button variant="link" size="icon" target="_blank" href="https://github.com/RDCodev">
-          <Github className="text-woodsmoke-950 dark:text-woodsmoke-400 hover:scale-125 transition-all ease-in duration-100"/>
-        </Button>
-        <Button variant="link" size="icon" target="_blank" href="https://www.linkedin.com/in/stalin-david-a77327294/">
-          <Linkedin className="text-woodsmoke-950 dark:text-woodsmoke-400 hover:scale-125 transition-all ease-in duration-100"/>
-        </Button>
-        <Button variant="link" size="icon" target="_blank" href="https://x.com/RDCodev">
-          <Twitter className="text-woodsmoke-950 dark:text-woodsmoke-400 hover:scale-125 transition-all ease-in duration-100"/>
-        </Button>
-        <MailSender client:only="react"/>
-      </div>
+<article class="h-auto w-full flex flex-col my-20 items-start justify-center space-y-14"> 
+  <section class="w-auto">
+    <h1 class="text-4xl text-woodsmoke-950 mb-8 dark:text-woodsmoke-50 font-semibold tracking-wide">Daln.dev</h1>
+    <p class="font-medium text-woodsmoke-900 dark:text-woodsmoke-200 ">Software Engineer & Backend Developer.</p>
+    <p class="font-normal text-base text-woodsmoke-900 dark:text-woodsmoke-200 ">Feel free to use my social media's to stay in touch.</p>
+    <div class="inline-flex items-center justify-start space-x-5 mt-8">
+      <Button variant="link" size="icon" target="_blank" href="https://github.com/RDCodev">
+        <Github className="text-woodsmoke-950 dark:text-woodsmoke-400 hover:scale-125 transition-all ease-in duration-100"/>
+      </Button>
+      <Button variant="link" size="icon" target="_blank" href="https://www.linkedin.com/in/stalin-david-a77327294/">
+        <Linkedin className="text-woodsmoke-950 dark:text-woodsmoke-400 hover:scale-125 transition-all ease-in duration-100"/>
+      </Button>
+      <Button variant="link" size="icon" target="_blank" href="https://x.com/RDCodev">
+        <Twitter className="text-woodsmoke-950 dark:text-woodsmoke-400 hover:scale-125 transition-all ease-in duration-100"/>
+      </Button>
+      <MailSender client:only="react"/>
     </div>
   </section>
-  <section class="w-full flex flex-col space-y-5">
-    <div class="h-max w-auto align-middle">
-      <h2 class="text-xl inline-block text-woodsmoke-950 dark:text-woodsmoke-50 font-semibold tracking-wide">Commits</h2>
-      <span class="text-woodsmoke-600 dark:text-woodsmoke-400 mx-1">&bullet;</span>
-      <span class="text-woodsmoke-600 dark:text-woodsmoke-400 font-medium text-base">
-        Latest { commits.length } commits.
-      </span>
-    </div>    
-    <div class="flex flex-col space-y-5 mt-5">
+  <section class="w-full h-max">
+    <h2 class="text-xl inline-block text-woodsmoke-950 dark:text-woodsmoke-50 font-semibold tracking-wide">Commits</h2>
+    <span class="text-woodsmoke-600 dark:text-woodsmoke-400 mx-1">&bullet;</span>
+    <span class="text-woodsmoke-600 dark:text-woodsmoke-400 font-medium text-base">
+      Latest { commits.length } commits.
+    </span>  
+    <div class="flex flex-col space-y-5 mt-10 w-full h-max">
       <Commits repos={repos} commits={commits}/>      
     </div>
   </section>

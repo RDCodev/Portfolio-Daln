@@ -35,12 +35,20 @@ export default {
           '800': '#971e1d',
           '900': '#7e1f1e',
           '950': '#440b0b',
-  
         }
       },
       fontFamily: {
         'poppins': ['Poppins', ...defaultTheme.fontFamily.sans]
-      }
+      },
+      keyframes: {
+        appear: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+       },
+       animation: {
+          appear: "appear 1s ease-in-out",
+       },
     }    
   },
   plugins: [

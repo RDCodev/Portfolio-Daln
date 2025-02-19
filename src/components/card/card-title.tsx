@@ -7,7 +7,7 @@ export interface cardTitleProps
 const CardTitle: React.FC<cardTitleProps> = ({ className, ...props }) => (
   <div
     className={cn(
-      'text-lg font-semibold tracking-tight leading-none', className
+      'text-lg font-semibold leading-none', className
     )}
     {...props}
   />

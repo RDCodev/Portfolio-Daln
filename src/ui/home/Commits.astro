@@ -50,40 +50,44 @@ const parseCvm = (msg: string) => {
   : 
     (
       commits.map(({ repo: { name }, commit, created_at }) => (
-      <Card> 
+      <Card className="animate-appear"> 
         <CardHeader>
-          <CardTitle className="flex justify-between items-center">
+          <CardTitle>
+            <div class="flex justify-between items-center">
             {
               typeof parseCommitTitle(name) === "object" ? 
                 (
-                  <div class="h-max w-auto">
+                  <p class="h-max w-auto max-w-max">
                     <a 
                       href={ repos[name]?.html_url }
                       target="_blank"
-                      class="text-woodsmoke-950 dark:text-woodsmoke-50 text-base inline-block decoration-woodsmoke-100 underline-offset-4 hover:underline ">
+                      class="text-woodsmoke-950 text-base inline-block decoration-2 pointer-events-auto decoration-woodsmoke-100 underline-offset-4 dark:text-woodsmoke-50 hover:underline">
                       { (parseCommitTitle(name) as RepositoryTitle).title }
                     </a>
-                    <span class="text-woodsmoke-600 dark:text-woodsmoke-400  mx-1">&bullet;</span>
                     <span class="text-woodsmoke-600 dark:text-woodsmoke-400 text-base">
-                      { (parseCommitTitle(name) as RepositoryTitle).scope }
+                      &bullet; { (parseCommitTitle(name) as RepositoryTitle).scope }
                     </span>
-                  </div>
+                  </p>
                 ) : 
                 (
-                  <h3 class="text-woodsmoke-950 dark:text-woodsmoke-50 text-base inline-block">
+                  <h3 class="text-woodsmoke-950 text-base inline-block dark:text-woodsmoke-50">
                     { (parseCommitTitle(name) as string) }
                   </h3>
                 ) 
             }
-            <span class="text-woodsmoke-800 dark:text-woodsmoke-200 text-sm">
+            <span class="text-sm text-woodsmoke-800 dark:text-woodsmoke-200">
               { parseDate(created_at) }
             </span>
+            </div>
           </CardTitle>
         </CardHeader>
         <CardContent className="text-woodsmoke-950 dark:text-woodsmoke-200 text-sm">
-          { parseCvm(commit.message)["subject"] }
+          <p class="leading-snug text-wrap">
+            { parseCvm(commit.message)["subject"] }
+          </p>
         </CardContent>
-        <CardFooter className="space-y-0 space-x-2.5">
+        <CardFooter>
+          <div class="flex flex-wrap grow items-center space-y-0 gap-2.5">
           {
             <Badge variant="secondary">
               { parseCvm(commit.message)["type"] }
@@ -94,6 +98,7 @@ const parseCvm = (msg: string) => {
               <Badge>{ topic }</Badge>
             ))
           }
+          </div>
         </CardFooter>
       </Card>
     ))
