@@ -7,7 +7,7 @@ export interface ToastDescriptionProps
 
 export const ToastDescription: React.FC<ToastDescriptionProps> = ({className, ...props}) => (
   <ToastPrimitive.Description
-    className={cn("text-sm opacity-90", className)}
+    className={cn("text-sm tracking-wide text-woodsmoke-100", className)}
     {...props}
   />
 )

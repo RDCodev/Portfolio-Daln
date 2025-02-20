@@ -23,18 +23,26 @@ export type MailSenderValues = {
 export const MailSender: React.FC = () => {
 
   const [isOpen, setOpen] = React.useState(false);
+
   const { toast } = useToast();
-  const { reset, register, handleSubmit, formState: { errors, isValid } } = 
-    useForm<MailSenderValues>({ mode: "onChange" });
+  const { reset, register, handleSubmit, formState: { errors, isValid } } = useForm<MailSenderValues>({ mode: "onChange" });
 
   const onSendMessage =  async (params: MailSenderValues) => {    
 
     const { data, error } = await actions.send(params);
 
     !error ? 
-      toast({ description: "Message sent successfully!" }) : 
-      toast({ description: data && "Failed to send message!" })
-    
+      toast({ 
+        title: "Delivered 🚀",
+        description: "Message sent successfully" 
+      }) : 
+      toast({ 
+        title: "Failed 😵‍💫",
+        variant: "destructive",
+        description: data && "Failed to send message!" 
+      }) 
+   
+
     reset();
     setOpen(false);
   }
@@ -46,7 +54,7 @@ export const MailSender: React.FC = () => {
   return (
     <Dialog onOpenChange={setOpen} modal={true} open={isOpen}>
       <DialogTrigger asChild>
-        <Button className="ml-5 duration-1000 animate-in fade-in" disabled variant="raw" size="icon" target="_blank" href="#mail">
+        <Button className="ml-5 duration-1000 animate-in fade-in" variant="raw" size="icon" target="_blank" href="#mail">
           <SendHorizontal className="text-woodsmoke-950 dark:text-woodsmoke-400 hover:scale-125 transition-all ease-in duration-100"/>
         </Button>
       </DialogTrigger>
@@ -62,7 +70,7 @@ export const MailSender: React.FC = () => {
                 type="text" 
                 autoComplete="off" 
                 className="mt-2.5"
-                required
+                aria-invalid={errors.firstName ? "true" : "false"}
                 {...register("firstName", { required: true })}
               />
               { errors.firstName && <small role="alert" className="absolute bottom-[-20px] left-0 text-red-500 text-xs font-medium tracking-wide">First Name is required</small> }
@@ -73,7 +81,7 @@ export const MailSender: React.FC = () => {
                 id="last-name" 
                 type="text" 
                 autoComplete="off" 
-                className="mt-2.5"
+                className="mt-2.5"                
                 {...register("lastName")}
               />
             </div>
@@ -85,7 +93,7 @@ export const MailSender: React.FC = () => {
               type="email" 
               autoComplete="off" 
               className="mt-2.5"
-              required
+              aria-invalid={errors.email ? "true" : "false"}
               {...register("email", { required: true, pattern: /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/ })}
             />
             { errors.email && 
@@ -100,7 +108,7 @@ export const MailSender: React.FC = () => {
             <TextArea 
               id="message" 
               className="mt-2.5"
-              required
+              aria-invalid={errors.message ? "true" : "false"}
               {...register("message", { required: true })}
             />
             { errors.message && <small role="alert" className="absolute bottom-[-20px] left-0 text-red-500 text-xs font-medium tracking-wide">Message is required.</small> }
