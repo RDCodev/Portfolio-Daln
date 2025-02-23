@@ -1,3 +1,4 @@
+import React from "react";
 import { Button } from "@ui/components/button/button";
 import { Dialog } from "@ui/components/dialog/dialog";
 import { DialogContent } from "@ui/components/dialog/dialog-content";
@@ -11,7 +12,7 @@ import { useForm } from "react-hook-form"
 import { DialogDescription } from "@ui/components/dialog/dialog-description";
 import { actions } from "astro:actions";
 import { useToast } from "@hooks/use-toast";
-import React from "react";
+import type { ErrorInferenceObject } from "astro/actions/runtime/utils.js";
 
 export type MailSenderValues = {
   firstName: string;
@@ -23,33 +24,42 @@ export type MailSenderValues = {
 export const MailSender: React.FC = () => {
 
   const [isOpen, setOpen] = React.useState(false);
-
+  const [isSending, setSending] = React.useState(false);
   const { toast } = useToast();
-  const { reset, register, handleSubmit, formState: { errors, isValid } } = useForm<MailSenderValues>({ mode: "onChange" });
+  const { reset, register, handleSubmit, formState: { errors, isValid } } = 
+    useForm<MailSenderValues>({ mode: "onChange" });
 
-  const onSendMessage =  async (params: MailSenderValues) => {    
-
-    const { data, error } = await actions.send(params);
-
-    !error ? 
+  const deliverMessage = async (params: MailSenderValues) => {
+      
+    try {
+      const res = await actions.send.orThrow(params);
+        
       toast({ 
         title: "Delivered 🚀",
-        description: "Message sent successfully" 
-      }) : 
+        description: res && "Message sent successfully" 
+      });
+    
+    } catch (error) {
+    
+      const { message } = error as ErrorInferenceObject;
+    
       toast({ 
         title: "Failed 😵‍💫",
         variant: "destructive",
-        description: data && "Failed to send message!" 
-      }) 
-   
-
-    reset();
-    setOpen(false);
+        description: message || "Failed to send message." 
+      });
+    }  
   }
 
-  React.useEffect(() => {
-    !open && reset();
-  }, [open])
+  const onDeliverMessage = () => {
+    handleSubmit(async (payload) =>
+      deliverMessage(payload)
+        .then(() => { reset(); setOpen(false); })
+        .finally(() => setSending(false))
+    );
+  };
+
+  React.useEffect(() => { !isOpen && reset() }, [isOpen]);
 
   return (
     <Dialog onOpenChange={setOpen} modal={true} open={isOpen}>
@@ -61,7 +71,7 @@ export const MailSender: React.FC = () => {
       <DialogContent>
         <DialogTitle>Message</DialogTitle>
         <DialogDescription>Please provide me with your details and I will contact you as soon as possible. 👌</DialogDescription>
-        <form onSubmit={handleSubmit(onSendMessage)} method="POST" className="flex flex-col space-y-8 py-3">
+        <form onSubmit={onDeliverMessage} method="POST" className="flex flex-col space-y-8 py-3">
           <div className="grid grid-cols-2 grid-rows-1 gap-5">
             <div className="relative inline-flex flex-col items-start">
               <label htmlFor="first-name" className="text-sm font-medium tracking-wide">First Name*</label>
@@ -114,7 +124,9 @@ export const MailSender: React.FC = () => {
             { errors.message && <small role="alert" className="absolute bottom-[-20px] left-0 text-red-500 text-xs font-medium tracking-wide">Message is required.</small> }
           </div>
           <div className="flex flex-row-reverse  sm:flex-row sm:justify-end sm:space-x-2">
-            <Button type="submit" disabled={!isValid}>Send</Button>
+            <Button type="submit" disabled={!isValid || isSending}>
+              { isSending ? "Sending..." : "Send" }
+            </Button>
             <DialogClose asChild>
               <Button variant="ghost">Cancel</Button>
             </DialogClose>
