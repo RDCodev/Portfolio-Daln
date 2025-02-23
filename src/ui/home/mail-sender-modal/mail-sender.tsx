@@ -54,7 +54,7 @@ export const MailSender: React.FC = () => {
   return (
     <Dialog onOpenChange={setOpen} modal={true} open={isOpen}>
       <DialogTrigger asChild>
-        <Button className="ml-5 duration-1000 animate-in fade-in" variant="raw" size="icon" target="_blank" href="#mail">
+        <Button className="ml-5 duration-1000 animate-in fade-in" variant="raw" size="icon">
           <SendHorizontal className="text-woodsmoke-950 dark:text-woodsmoke-400 hover:scale-125 transition-all ease-in duration-100"/>
         </Button>
       </DialogTrigger>

@@ -14,14 +14,20 @@ const { repos, commits } = await fetchGithubCommits();
     <p class="font-medium text-woodsmoke-900 dark:text-woodsmoke-200 ">Software Engineer & Backend Developer.</p>
     <p class="font-normal text-base text-woodsmoke-900 dark:text-woodsmoke-200 ">Feel free to use my social media's to stay in touch.</p>
     <div class="inline-flex items-center justify-start space-x-5 mt-8">
-      <Button variant="link" size="icon" target="_blank" href="https://github.com/RDCodev">
-        <Github className="text-woodsmoke-950 dark:text-woodsmoke-400 hover:scale-125 transition-all ease-in duration-100"/>
+      <Button variant="raw" size="icon" asChild>
+        <a target="_blank" href="https://github.com/RDCodev">
+          <Github className="text-woodsmoke-950 dark:text-woodsmoke-400 hover:scale-125 transition-all ease-in duration-100"/>
+        </a>
       </Button>
-      <Button variant="link" size="icon" target="_blank" href="https://www.linkedin.com/in/stalin-david-a77327294/">
-        <Linkedin className="text-woodsmoke-950 dark:text-woodsmoke-400 hover:scale-125 transition-all ease-in duration-100"/>
+      <Button variant="raw" size="icon" asChild>
+        <a target="_blank" href="https://www.linkedin.com/in/stalin-david-a77327294/">
+          <Linkedin className="text-woodsmoke-950 dark:text-woodsmoke-400 hover:scale-125 transition-all ease-in duration-100"/>
+        </a>
       </Button>
-      <Button variant="link" size="icon" target="_blank" href="https://x.com/RDCodev">
-        <Twitter className="text-woodsmoke-950 dark:text-woodsmoke-400 hover:scale-125 transition-all ease-in duration-100"/>
+      <Button variant="raw" size="icon" asChild>
+        <a target="_blank" href="https://x.com/RDCodev">
+          <Twitter className="text-woodsmoke-950 dark:text-woodsmoke-400 hover:scale-125 transition-all ease-in duration-100"/>
+        </a>
       </Button>
       <MailSender client:only="react"/>
     </div>

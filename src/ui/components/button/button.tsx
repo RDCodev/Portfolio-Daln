@@ -1,7 +1,8 @@
+import React from "react";
 import { cva } from "class-variance-authority";
 import { cn } from "@utils/cn";
+import { Slot } from "@radix-ui/react-slot";
 import type { VariantProps } from "class-variance-authority";
-import React from "react";
 
 const buttonVariants = cva(
   'inline-flex items-center justify-center font-poppins font-medium rounded-lg transition-colors focus-visible:outline focus-visible:outline-woodsmoke-100 focus-visible:outline-offset-2 disabled:opacity-50 disabled:pointer-events-none',
@@ -18,8 +19,6 @@ const buttonVariants = cva(
           'bg-transparent text-woodsmoke-50 hover:bg-woodsmoke-500/50',
         raw: 
           'bg-transparent text-woodsmoke-50',
-        link: 
-          'bg-transparent text-woodsmoke-50'
       },
       size: {
         default: 
@@ -38,28 +37,21 @@ const buttonVariants = cva(
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-  VariantProps<typeof buttonVariants> { };
+    VariantProps<typeof buttonVariants> { asChild?: boolean; };
 
-export interface LinkedButtonProps 
-  extends React.AnchorHTMLAttributes<HTMLAnchorElement> { };
+const Button: React.FC<ButtonProps> = ({ className, asChild, variant, size, disabled, ...props }) => {
 
-const Button: React.FC<LinkedButtonProps & ButtonProps> = ({ className, variant, size, disabled, href, ...props }) =>
-(
-  variant !== "link" ? 
-    (
-      <button
-        className={cn(buttonVariants({ variant, size, className }))}
-        disabled={disabled || undefined}
-        {...props}
-      />
-    ) : 
-    (
-      <a
-        href={href}
-        className={cn(buttonVariants({ variant, size, className }))}
-        {...props}
-      />
-    )
-);
+  const Comp = asChild ? Slot : "button";
+
+  return (
+    <Comp
+      className={cn(buttonVariants({ variant, size, className }))}
+      disabled={disabled || undefined}
+      {...props}
+    />
+  );
+}
+
+;
 
 export { Button, buttonVariants }
