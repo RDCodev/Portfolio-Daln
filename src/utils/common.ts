@@ -3,11 +3,11 @@ export interface RepositoryTitle {
   title: string
 }
 
-export function parseTitle(_title: string, identifier: string): RepositoryTitle | null {
+export function parseTitle(title: string, identifier: string): RepositoryTitle | null {
   
-  if (!_title || !identifier) return null;
+  if (!title || !identifier) return null;
 
-  let [scope, ...name] = _title.split(identifier);
+  let [scope, ...name] = title.split(identifier);
   
   return { scope, title: name.join(" ") }
 }
