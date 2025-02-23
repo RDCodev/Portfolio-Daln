@@ -6,7 +6,7 @@ import Handlebars from "handlebars";
 import msgTemplate from "@resources/handlebars-templates/message-notification.hbs?raw";
 import type { MailSenderValues } from "@ui/home/mail-sender-modal/mail-sender";
 
-const resend = new Resend(import.meta.env.RESEND_API_KEY || getSecret("RESEND_API_KEY"));
+const resend = new Resend(getSecret("RESEND_API_KEY"));
 
 export const server = {
   send: defineAction({
@@ -18,7 +18,7 @@ export const server = {
       const { data, error } = await resend.emails.send({
         to: ["rkostalin@gmail.com"],
         from: "Daln.dev <server@daln.dev>",
-        subject: "Daln.dev - Message",
+        subject: "Hi there! You've got a new message!",
         html: template({
           receipt: parseName(rest),
           receiptEmail: email,
