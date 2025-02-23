@@ -5,7 +5,7 @@ import { DialogContent } from "@ui/components/dialog/dialog-content";
 import { DialogTitle } from "@ui/components/dialog/dialog-title";
 import { DialogTrigger } from "@ui/components/dialog/dialog-trigger";
 import { DialogClose } from "@ui/components/dialog/dialog-close";
-import { SendHorizontal } from "lucide-react";
+import { RotateCw, SendHorizontal } from "lucide-react";
 import { Input } from "@ui/components/input/input";
 import { TextArea } from "@ui/components/text-area/text-area";
 import { useForm } from "react-hook-form"
@@ -30,6 +30,8 @@ export const MailSender: React.FC = () => {
     useForm<MailSenderValues>({ mode: "onChange" });
 
   const deliverMessage = async (params: MailSenderValues) => {
+
+    setSending(true);
       
     try {
       const res = await actions.send.orThrow(params);
@@ -38,6 +40,8 @@ export const MailSender: React.FC = () => {
         title: "Delivered 🚀",
         description: res && "Message sent successfully" 
       });
+
+      reset(); setOpen(false);
     
     } catch (error) {
     
@@ -48,16 +52,12 @@ export const MailSender: React.FC = () => {
         variant: "destructive",
         description: message || "Failed to send message." 
       });
-    }  
+    } finally {
+      setSending(false)
+    }
   }
 
-  const onDeliverMessage = () => {
-    handleSubmit(async (payload) =>
-      deliverMessage(payload)
-        .then(() => { reset(); setOpen(false); })
-        .finally(() => setSending(false))
-    );
-  };
+  const onDeliverMessage = handleSubmit((payload) => deliverMessage(payload));
 
   React.useEffect(() => { !isOpen && reset() }, [isOpen]);
 
@@ -124,8 +124,9 @@ export const MailSender: React.FC = () => {
             { errors.message && <small role="alert" className="absolute bottom-[-20px] left-0 text-red-500 text-xs font-medium tracking-wide">Message is required.</small> }
           </div>
           <div className="flex flex-row-reverse  sm:flex-row sm:justify-end sm:space-x-2">
-            <Button type="submit" disabled={!isValid || isSending}>
-              { isSending ? "Sending..." : "Send" }
+            <Button type="submit" disabled={!isValid || isSending}>              
+              { isSending && <RotateCw className="animate-spin mr-2" size={18}/> }
+              Send
             </Button>
             <DialogClose asChild>
               <Button variant="ghost">Cancel</Button>

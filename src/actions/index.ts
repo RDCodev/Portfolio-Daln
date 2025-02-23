@@ -1,9 +1,9 @@
 import { Resend } from "resend";
 import { ActionError, defineAction } from "astro:actions";
-import Handlebars from "handlebars";
-import notification from "@templates/notification.hbs?raw";
-import type { MailSenderValues } from "@ui/home/mail-sender-modal/mail-sender";
 import { parseName } from "@utils/common";
+import Handlebars from "handlebars";
+import msgTemplate from "@resources/handlebars-templates/message-notification.hbs?raw";
+import type { MailSenderValues } from "@ui/home/mail-sender-modal/mail-sender";
 
 const resend = new Resend(import.meta.env.RESEND_API_KEY);
 
@@ -12,7 +12,7 @@ export const server = {
     accept: "json",
     handler: async ({ email, message, ...rest }: MailSenderValues) => {
 
-      const template = Handlebars.compile(notification);
+      const template = Handlebars.compile(msgTemplate);
 
       const { data, error } = await resend.emails.send({
         to: ["rkostalin@gmail.com"],
