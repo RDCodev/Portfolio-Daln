@@ -1,14 +1,14 @@
-import { Button } from "@components/button/button";
-import { Dialog } from "@components/dialog/dialog";
-import { DialogContent } from "@components/dialog/dialog-content";
-import { DialogTitle } from "@components/dialog/dialog-title";
-import { DialogTrigger } from "@components/dialog/dialog-trigger";
-import { DialogClose } from "@components/dialog/dialog-close";
+import { Button } from "@ui/components/button/button";
+import { Dialog } from "@ui/components/dialog/dialog";
+import { DialogContent } from "@ui/components/dialog/dialog-content";
+import { DialogTitle } from "@ui/components/dialog/dialog-title";
+import { DialogTrigger } from "@ui/components/dialog/dialog-trigger";
+import { DialogClose } from "@ui/components/dialog/dialog-close";
 import { SendHorizontal } from "lucide-react";
-import { Input } from "@components/input/input";
-import { TextArea } from "@components/text-area/text-area";
+import { Input } from "@ui/components/input/input";
+import { TextArea } from "@ui/components/text-area/text-area";
 import { useForm } from "react-hook-form"
-import { DialogDescription } from "@components/dialog/dialog-description";
+import { DialogDescription } from "@ui/components/dialog/dialog-description";
 import { actions } from "astro:actions";
 import { useToast } from "@hooks/use-toast";
 import React from "react";

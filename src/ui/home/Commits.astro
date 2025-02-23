@@ -1,16 +1,16 @@
 ---
-import { Badge } from "@components/badge/badge";
+import { Badge } from "@ui/components/badge/badge";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@components/card/card";
+} from "@ui/components/card/card";
 import { DateTime } from "luxon";
 import { parseTitle, type RepositoryTitle } from "@utils/common";
-import type { Repository } from "@api/types/Repository.type";
-import type { FetchedCommit } from "@api/github/fetchGithubCommits";
+import type { Repository } from "@ui/home/api/types/Repository.type";
+import type { FetchedCommit } from "@ui/home/api/github/fetchGithubCommits";
 
 interface Props {
   repos: Record<string, Repository>;

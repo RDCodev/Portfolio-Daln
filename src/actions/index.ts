@@ -2,7 +2,7 @@ import { Resend } from "resend";
 import { ActionError, defineAction } from "astro:actions";
 import Handlebars from "handlebars";
 import notification from "@templates/notification.hbs?raw";
-import type { MailSenderValues } from "@ui/home/components/mail-sender";
+import type { MailSenderValues } from "@ui/home/mail-sender-modal/mail-sender";
 import { parseName } from "@utils/common";
 
 const resend = new Resend(import.meta.env.RESEND_API_KEY);

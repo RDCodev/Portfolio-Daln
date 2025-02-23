@@ -1,8 +1,8 @@
 import React from "react";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
-import type { ToastProps } from "@components/toast/toast";
-import type { ToastActionElement } from "@components/toast/toast-action";
+import type { ToastProps } from "@ui/components/toast/toast";
+import type { ToastActionElement } from "@ui/components/toast/toast-action";
 
 type ToasterToast = ToastProps & {
   id            : string;

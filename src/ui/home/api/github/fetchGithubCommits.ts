@@ -1,7 +1,7 @@
-import { fetchUserEvents, fetchRepoInfo } from "@api/github/fetchUserEvents";
+import { fetchUserEvents, fetchRepoInfo } from "@ui/home/api/github/fetchUserEvents";
 import { JSONPath } from "jsonpath-plus";
-import type { Repository } from "@api/types/Repository.type";
-import type { GithubCommit, GithubEvent } from "@api/types/UserEvents.type";
+import type { Repository } from "@ui/home/api/types/Repository.type";
+import type { GithubCommit, GithubEvent } from "@ui/home/api/types/UserEvents.type";
 
 export type FetchedCommit = Omit<GithubEvent, "payload"> & { commit: GithubCommit }
 
