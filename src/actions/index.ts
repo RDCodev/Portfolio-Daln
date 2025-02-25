@@ -6,14 +6,15 @@ import Handlebars from "handlebars";
 import msgTemplate from "@resources/handlebars-templates/message-notification.hbs?raw";
 import type { MailSenderValues } from "@ui/home/mail-sender-modal/mail-sender";
 
-const resend = new Resend(getSecret("RESEND_API_KEY"));
 const templateSpec = Handlebars.precompile(msgTemplate);
-const template = Handlebars.template(templateSpec);
 
 export const server = {
   send: defineAction({
     accept: "json",
     handler: async ({ email, message, ...rest }: MailSenderValues) => {
+
+      const resend = new Resend(getSecret("RESEND_API_KEY"));
+      const template = Handlebars.template(templateSpec);
 
       const { data, error } = await resend.emails.send({
         to: ["rkostalin@gmail.com"],

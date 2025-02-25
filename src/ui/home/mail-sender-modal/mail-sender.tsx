@@ -50,7 +50,7 @@ export const MailSender: React.FC = () => {
       toast({ 
         title: "Failed 😵‍💫",
         variant: "destructive",
-        description: message || "Failed to send message." 
+        description: message || "Failed to send message."
       });
     } finally {
       setSending(false)
