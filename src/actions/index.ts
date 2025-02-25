@@ -1,26 +1,19 @@
 import { Resend } from "resend";
 import { ActionError, defineAction } from "astro:actions";
 import { parseName } from "@utils/common";
+import { getSecret } from "astro:env/server"
 import Handlebars from "handlebars";
 import msgTemplate from "@resources/handlebars-templates/message-notification.hbs?raw";
 import type { MailSenderValues } from "@ui/home/mail-sender-modal/mail-sender";
 
-export interface Env {
-  env: { RESEND_API_KEY: string; }
-}
-
-const resendApiKey = import.meta.env.RESEND_API_KEY;
+const resend = new Resend(getSecret("RESEND_API_KEY"));
+const templateSpec = Handlebars.precompile(msgTemplate);
+const template = Handlebars.template(templateSpec);
 
 export const server = {
   send: defineAction({
     accept: "json",
-    handler: async ({ email, message, ...rest }: MailSenderValues, ctx) => {      
-
-      const { env } = (ctx.locals as { [key: string]: Env }).runtime;
-
-      const resend = new Resend(resendApiKey || env.RESEND_API_KEY);
-
-      const template = Handlebars.compile(msgTemplate);
+    handler: async ({ email, message, ...rest }: MailSenderValues) => {
 
       const { data, error } = await resend.emails.send({
         to: ["rkostalin@gmail.com"],
