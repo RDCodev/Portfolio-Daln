@@ -6,12 +6,20 @@ import Handlebars from "handlebars";
 import msgTemplate from "@resources/handlebars-templates/message-notification.hbs?raw";
 import type { MailSenderValues } from "@ui/home/mail-sender-modal/mail-sender";
 
-const resend = new Resend(getSecret("RESEND_API_KEY"));
+export interface Env {
+  env: { RESEND_API_KEY: string; }
+}
+
+let resend!: Resend;
 
 export const server = {
   send: defineAction({
     accept: "json",
-    handler: async ({ email, message, ...rest }: MailSenderValues) => {
+    handler: async ({ email, message, ...rest }: MailSenderValues, ctx) => {      
+
+      const { env } = (ctx.locals as { [key: string]: Env }).runtime;
+
+      resend = new Resend(getSecret("RESEND_API_KEY") || env.RESEND_API_KEY);
 
       const template = Handlebars.compile(msgTemplate);
 
