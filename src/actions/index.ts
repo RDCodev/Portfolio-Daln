@@ -1,7 +1,6 @@
 import { Resend } from "resend";
 import { ActionError, defineAction } from "astro:actions";
 import { parseName } from "@utils/common";
-import { getSecret } from "astro:env/server"
 import Handlebars from "handlebars";
 import msgTemplate from "@resources/handlebars-templates/message-notification.hbs?raw";
 import type { MailSenderValues } from "@ui/home/mail-sender-modal/mail-sender";
@@ -10,7 +9,7 @@ export interface Env {
   env: { RESEND_API_KEY: string; }
 }
 
-let resend!: Resend;
+const resendApiKey = import.meta.env.RESEND_API_KEY;
 
 export const server = {
   send: defineAction({
@@ -19,7 +18,7 @@ export const server = {
 
       const { env } = (ctx.locals as { [key: string]: Env }).runtime;
 
-      resend = new Resend(getSecret("RESEND_API_KEY") || env.RESEND_API_KEY);
+      const resend = new Resend(resendApiKey || env.RESEND_API_KEY);
 
       const template = Handlebars.compile(msgTemplate);
 
