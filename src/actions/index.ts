@@ -2,7 +2,6 @@ import { Resend } from "resend";
 import { ActionError, defineAction } from "astro:actions";
 import { parseName } from "@utils/common";
 import { getSecret } from "astro:env/server"
-import Handlebars from "handlebars";
 import msgTemplate from "@resources/handlebars-templates/message-notification.hbs?raw";
 import Mustache from "mustache";
 import type { MailSenderValues } from "@ui/home/mail-sender-modal/mail-sender";
