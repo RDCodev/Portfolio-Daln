@@ -15,12 +15,12 @@ export function parseTitle(title: string, identifier: string): RepositoryTitle |
 export type NameMode = "short";
 
 export interface NameProps {
-  firstName: string;
-  lastName?: string;
-  middleName?: string;
-  motherName?: string;
-  suffix?: string;
-  prefix?: string;
+  firstName       : string;
+  lastName       ?: string;
+  middleName     ?: string;
+  motherName     ?: string;
+  suffix         ?: string;
+  prefix         ?: string;
 }
 
 export function parseName(_name: NameProps, mode: NameMode = "short") {
