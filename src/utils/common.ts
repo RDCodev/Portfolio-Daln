@@ -36,3 +36,10 @@ export function parseName(_name: NameProps, mode: NameMode = "short") {
 
   return name.trim();
 }
+
+export function parseRecord<T>(record: Record<string, T>): Array<T> {
+
+  if (!Object.keys(record).length && record === undefined) return [];
+
+  return Object.values<T>(record);
+}

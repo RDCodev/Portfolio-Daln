@@ -4,6 +4,7 @@ import { Button } from "@ui/components/button/button"
 import { MailSender } from "@ui/home/mail-sender-modal/mail-sender";
 import Commits from "@ui/home/Commits.astro";
 import fetchGithubCommits from "@ui/home/api/github/fetchGithubCommits";
+import Projects from "./Projects.astro";
 
 const { repos, commits } = await fetchGithubCommits();
 
@@ -30,6 +31,12 @@ const { repos, commits } = await fetchGithubCommits();
         </a>
       </Button>
       <MailSender client:only="react"/>
+    </div>
+  </section>
+  <section class="w-full h-max">
+    <h2 class="text-xl inline-block text-woodsmoke-950 dark:text-woodsmoke-50 font-semibold tracking-wide">Projects</h2>    
+    <div class="grid grid-cols-2 gap-x-4 gap-y-2 mt-10 w-full h-max">
+      <Projects repos={repos}/>
     </div>
   </section>
   <section class="w-full h-max">

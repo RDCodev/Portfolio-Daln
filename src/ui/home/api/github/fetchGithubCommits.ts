@@ -1,39 +1,36 @@
 import { fetchUserEvents, fetchRepoInfo } from "@ui/home/api/github/fetchUserEvents";
 import { JSONPath } from "jsonpath-plus";
-import type { Repository } from "@ui/home/api/types/Repository.type";
-import type { GithubCommit, GithubEvent } from "@ui/home/api/types/UserEvents.type";
+import type { Repository } from "@ui/home/api/github/types/Repository.type";
+import type { GithubCommit, GithubEvent } from "@ui/home/api/github/types/UserEvents.type";
 
 export type FetchedCommit = Omit<GithubEvent, "payload"> & { commit: GithubCommit }
 
 export default async function fetchGithubCommits() {
 
-  const reposNamePath = "$..repo.name";
-
-  let repos: Record<string, Repository> = {};
-  let commits: FetchedCommit[] = [];
+  const repos: Record<string, Repository> = {};
 
   const { events } = await fetchUserEvents();
 
   const commitsEvents = events.filter(({ type }) => type === "PushEvent");
+  const reposToFetch = [
+    ...new Set(
+      JSONPath<string[]>({
+        path: "$..repo.name", json: commitsEvents,
+      })
+    ),
+  ].map((repo) => fetchRepoInfo(repo))
 
-  const uniqueRepos = await Promise.all(
-    [
-      ...new Set(
-        JSONPath<string[]>({
-          path: reposNamePath, json: events,
-        })
-      ),
-    ].map((repo) => fetchRepoInfo(repo))
-  );
+  const uniqueRepos = await Promise.all(reposToFetch);
 
   for (const { info: repo } of uniqueRepos) {
     repos[repo.full_name] = repo;
   }
 
-  commits = commitsEvents.flatMap(({ payload: { commits }, ...rest }) => commits
-    .filter(() => repos[rest.repo.name]!)
-    .map((commit) => ({ ...rest, commit }))
-  );
+  const commits = commitsEvents
+    .flatMap(({ payload: { commits }, ...rest }) => commits
+      .filter(() => repos[rest.repo.name]!)
+      .map((commit) => ({ ...rest, commit }))
+    ) as FetchedCommit[];
 
   return { repos, commits };
 }

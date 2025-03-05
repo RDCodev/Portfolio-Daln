@@ -2,8 +2,16 @@
 import { Avatar } from "@ui/components/avatar/avatar";
 import { Badge } from "@ui/components/badge/badge";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@ui/components/card/card";
+import { parseRecord } from "@utils/common";
+import type { Repository } from "@ui/home/api/github/types/Repository.type";
 
-const projects = Array.from({ length: 5 });
+interface Props {
+  repos: Record<string, Repository>;
+}
+
+const { repos } = Astro.props;
+
+const projects = parseRecord<Repository>(repos);
 
 ---
   {

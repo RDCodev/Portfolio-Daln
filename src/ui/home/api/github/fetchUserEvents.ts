@@ -1,7 +1,7 @@
 import { axios } from "@libs/fetcher";
-import type { GithubEvent } from "@ui/home/api/types/UserEvents.type";
-import type { RepoCommit } from "@ui/home/api/types/RepoCommits.type";
-import type { Repository } from "@ui/home/api/types/Repository.type";
+import type { GithubEvent } from "@ui/home/api/github/types/UserEvents.type";
+import type { RepoCommit } from "@ui/home/api/github/types/RepoCommits.type";
+import type { Repository } from "@ui/home/api/github/types/Repository.type";
 
 export const GH_USER                = "RDCodev";
 export const GH_URL                 = "https://api.github.com";

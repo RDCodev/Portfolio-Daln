@@ -10,7 +10,7 @@ export interface RepoCommit {
   author:       CommitAuthor;
   committer:    CommitAuthor;
   parents:      Parent[];
-  repo?:         Repository;
+  repo?:        Repository;
 }
 
 export interface CommitAuthor {
